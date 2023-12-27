@@ -1,0 +1,76 @@
+.profile {
+    width: 10vw;
+    max-width: 200px;
+    min-width: 84px;
+    @apply hover:cursor-pointer
+}
+
+.profile > div {
+    width: 84px;
+    height: 84px;
+    background-color: #141414;
+    @apply flex rounded-md
+}
+
+.new-profile img, .edit-profile img {
+    height: 64px;
+    width: 64px;
+    @apply rounded-sm
+}
+
+.new-profile input {
+    background-color: #666;
+    padding: .2em .6em;
+    width: 100%;
+}
+
+
+.edit-profile input {
+    background-color: #666;
+    padding: .2em .6em;
+}
+
+.profile:hover > div {
+    @apply bg-white
+}
+
+.profile img {
+    border: 1px solid transparent;
+    @apply rounded-md
+}
+
+.profile:hover img {
+    border: 1px solid #FFF;
+}
+
+.profile.managing:hover > div {
+    background-color: transparent;
+}
+
+.profile.managing:hover img {
+    border: 1px solid #FFF;
+}
+
+.profile:hover > span {
+    color: #FFF;
+}
+
+.profile .edit-icon {
+    @apply absolute w-full h-full flex justify-center items-center
+}
+
+.profile .edit-icon > svg {
+    height: 21px;
+    width: 21px;
+}
+
+.profile.managing img {
+    @apply opacity-60
+}
+
+@media (min-width: 768px) {
+    .new-profile img {
+        height: 84px;
+        width: 84px;
+    }
+}

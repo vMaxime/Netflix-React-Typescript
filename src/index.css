@@ -22,8 +22,20 @@ footer {
     color: #FF0000;
 }
 
+.border-red {
+    border-color: #FF0000;
+}
+
+.bg-red {
+    background-color: #FF0000;
+}
+
 .text-light {
     color: #8c8c8c;
+}
+
+.border-light {
+    border-color: #8c8c8c;
 }
 
 .text-dark {
@@ -32,6 +44,27 @@ footer {
 
 .divider {
     border-top: 1px solid #737373;
+}
+
+.text-xs {
+    font-size: .65rem;
+}
+
+.text-xxs {
+    font-size: .5rem;
+}
+
+.button-classic {
+    @apply bg-none border border-light hover:border-white hover:text-white text-xs md:text-sm text-light font-medium px-4 py-2 outline-none
+}
+
+.button-classic-2 {
+    @apply bg-white border border-white hover:border-red-600 hover:bg-red-600 hover:text-white text-xs md:text-sm text-black font-medium px-4 py-2 outline-none
+}
+
+.badge {
+    background-color: #333;
+    @apply p-2 text-xxs md:text-xs w-fit
 }
 
 @media (min-width: 768px) {

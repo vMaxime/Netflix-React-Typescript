@@ -49,7 +49,8 @@ function Login() {
                     type: 'LOGIN',
                     payload: {
                         token: data.token,
-                        email: 'johndoe@gmail.com'
+                        email: 'johndoe@gmail.com',
+                        profiles: []
                     }
                 });
                 setLoading(false);
