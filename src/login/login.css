@@ -1,0 +1,9 @@
+.sign-in {
+    background-color: #333;
+    color: #8c8c8c;
+    @apply flex items-center px-4 py-2
+}
+
+.sign-in g {
+    fill: #8c8c8c;
+}
