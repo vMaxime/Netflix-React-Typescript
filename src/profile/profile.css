@@ -1,13 +1,14 @@
 .profile {
-    width: 10vw;
-    max-width: 200px;
-    min-width: 84px;
     @apply hover:cursor-pointer
 }
 
 .profile > div {
-    width: 84px;
-    height: 84px;
+    height: 10vw;
+    width: 10vw;
+    max-height: 200px;
+    max-width: 200px;
+    min-height: 84px;
+    min-width: 84px;
     background-color: #141414;
     @apply flex rounded-md
 }

@@ -1,0 +1,25 @@
+.slider {
+    @apply relative overflow-x-hidden
+}
+
+.slider .move-left, .slider .move-right {
+    background: linear-gradient(270deg,#141414 0,hsla(0,0%,8%,.4));
+    width: 4%;
+    @apply absolute top-0 h-full flex justify-center items-center z-10
+}
+
+.slider .move-left > svg, .slider .move-right > svg {
+    @apply fill-white h-4 w-2
+}
+
+.slider .move-left:hover > svg, .slider .move-right:hover > svg {
+    @apply h-6 w-4
+}
+
+.slider .move-left {
+    @apply left-0 rounded-tr-md rounded-br-md
+}
+
+.slider .move-right {
+    @apply right-0 rounded-tl-md rounded-bl-md
+}

@@ -42,7 +42,9 @@ type UserAction =
   | { type: "LOGIN", payload: UserInterface }
   | { type: "LOGOUT" }
   | { type: "ADD_PROFILE", payload: ProfileInterface }
-  | { type: "UPDATE_PROFILE", target: string, payload: ProfileInterface };
+  | { type: "UPDATE_PROFILE", target: string, payload: ProfileInterface }
+  | { type: "UPDATE_PROFILE_PICTURE", target: string, payload: string }
+  | { type: "REMOVE_PROFILE", target: string };
   
 const reducer = (state: UserInterface, action: UserAction): UserInterface => {
     switch (action.type) {
@@ -52,7 +54,7 @@ const reducer = (state: UserInterface, action: UserAction): UserInterface => {
           ...action.payload,
           profiles: defaultProfiles
         };
-        localStorage.setItem('user', JSON.stringify(user))
+        localStorage.setItem('user', JSON.stringify(user));
         return user;
       }
       case "LOGOUT": {
@@ -64,7 +66,7 @@ const reducer = (state: UserInterface, action: UserAction): UserInterface => {
           ...state,
           profiles: [...state.profiles, action.payload]
         }
-        localStorage.setItem('user', JSON.stringify(user))
+        localStorage.setItem('user', JSON.stringify(user));
         return user;
       }
       case "UPDATE_PROFILE": {
@@ -72,7 +74,23 @@ const reducer = (state: UserInterface, action: UserAction): UserInterface => {
           ...state,
           profiles: [...state.profiles.map(profile => profile.name === action.target ? action.payload : profile)]
         }
-        localStorage.setItem('user', JSON.stringify(user))
+        localStorage.setItem('user', JSON.stringify(user));
+        return user;
+      }
+      case "UPDATE_PROFILE_PICTURE": {
+        const user = {
+          ...state,
+          profiles: [...state.profiles.map(profile => profile.name === action.target ? { ...profile, picture: action.payload } : profile)]
+        }
+        localStorage.setItem('user', JSON.stringify(user));
+        return user;
+      }
+      case "REMOVE_PROFILE": {
+        const user = {
+          ...state,
+          profiles: state.profiles.filter(profile => profile.name != action.target)
+        }
+        localStorage.setItem('user', JSON.stringify(user));
         return user;
       }
       default:
