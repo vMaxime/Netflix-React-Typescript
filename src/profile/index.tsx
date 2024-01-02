@@ -1,31 +1,44 @@
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import './profile.css';
-import { ProfileInterface, UserContext, UserDispatchContext } from '../user';
+import { ProfileInterface, UserContext, UserDispatchContext, generateId } from '../user';
 import EditProfile from './EditProfile';
 import EditProfilePicture from './EditProfilePicture';
 
-interface ProfileProps {
-    setSelectedProfile: React.Dispatch<ProfileInterface | null>
-}
-
-const Profile: React.FC<ProfileProps> = ({ setSelectedProfile }) => {
+function Profile() {
 
     const user = useContext(UserContext);
     const dispatch = useContext(UserDispatchContext);
 
     const profiles = user?.profiles || [];
-    const [currentProfile, setCurrentProfile] = useState<ProfileInterface | null>(null);
+    const managing = user?.managingProfiles || false;
+    const [currentProfile, setCurrentProfile] = useState<ProfileInterface | null>(null); // current profile user is editing
     const [editingProfilePicture, setEditingProfilePicture] = useState(false);
-    const [newProfile, setNewProfile] = useState<ProfileInterface | null>(null);
+    const [newProfile, setNewProfile] = useState<ProfileInterface | null>(null); // current profile user is creating
     const [error, setError] = useState<string | null>(null);
-    const [managing, setManaging] = useState(false);
+
+    const toggleManaging = () => {
+        if (dispatch != null)
+            dispatch({ type: 'TOGGLE_MANAGING' });
+    };
+
+    const setSelectedProfile = (profile: ProfileInterface) => {
+        if (dispatch === null)  
+            return;
+        
+        dispatch({
+            type: 'SELECT_PROFILE',
+            payload: profile.id
+        });
+    };
 
     const defaultProfile: ProfileInterface = {
+        id: generateId(),
         name: '',
         picture: 'https://occ-0-2216-55.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABTxO1HAzIh18LDAY7Igs6qQ3GhmsclmpCllWnoojeSDD0lMm9hUCp-C4VGo3cT40xfg_7SpIoY6pmRIl-W7B5CN8kvXCBqM7n8_f.png?r=a4b',
         alias: null,
         read_next_episode: true,
-        read_preview: true
+        read_preview: true,
+        notifications: []
     }
 
     const gradientStyle = {
@@ -60,19 +73,40 @@ const Profile: React.FC<ProfileProps> = ({ setSelectedProfile }) => {
             }
         }
     };
-    
-    useEffect(() => {
-        if (currentProfile === null || user === null)
-            return;
 
-        const profiles = user.profiles;
-        const newData = profiles.find(profile => profile.name === currentProfile.name);
-        if (newData != null)
-            setCurrentProfile(newData);
-    }, [user]);
+    const handleProfilePictureChose = (choice: string) => {
+        if (currentProfile != null)
+            setCurrentProfile({ ...currentProfile, picture: choice });
+        setEditingProfilePicture(false);
+    };
+
+    const handleSave = (): string | null => {
+        setCurrentProfile(null);
+        if (dispatch === null || currentProfile === null)
+            return null;
+        
+        if (profiles.find(({ id, name }) => currentProfile.id != id && name === currentProfile.name))
+            return 'Un profil utilise déjà ce nom';
+
+        dispatch({
+            type: 'UPDATE_PROFILE',
+            payload: currentProfile
+        });
+        return null;
+    };
+
+    const handleDelete = () => {
+        setCurrentProfile(null);
+        if (dispatch === null || currentProfile === null)
+            return;
+        dispatch({
+            type: 'REMOVE_PROFILE',
+            payload: currentProfile.id
+        });
+    };
 
     return currentProfile != null && editingProfilePicture ?
-        <EditProfilePicture profile={currentProfile} onCancel={() => setEditingProfilePicture(false)} />
+        <EditProfilePicture profile={currentProfile} onChose={handleProfilePictureChose} />
     :
     <>
         <header className="w-full" style={{ height: '70px', backgroundColor: '#141414' }}>
@@ -121,17 +155,17 @@ const Profile: React.FC<ProfileProps> = ({ setSelectedProfile }) => {
                     {
                         managing
                         ?
-                        <button className="button-classic-2 block mx-auto mt-10" onClick={() => setManaging(false)}>
+                        <button className="button-classic-2 block mx-auto mt-10" onClick={toggleManaging}>
                             Terminé
                         </button>
                         :
-                        <button className="button-classic block mx-auto mt-10" onClick={() => setManaging(true)}>
+                        <button className="button-classic block mx-auto mt-10" onClick={toggleManaging}>
                             Gérer les profils
                         </button>
                     }
                 </div>
                 :
-                <EditProfile profile={currentProfile} onEditPicture={() => setEditingProfilePicture(true)} handleCancel={() => setCurrentProfile(null)} onSaved={() => setCurrentProfile(null)} />
+                <EditProfile profile={currentProfile} setProfile={setCurrentProfile} onEditPicture={() => setEditingProfilePicture(true)} onSave={handleSave} onDelete={handleDelete} onClose={() => setCurrentProfile(null)} />
             :
             <div className="flex flex-col mx-auto mt-52 new-profile px-2">
                 <h1 className="text-2xl">Ajouter un profil</h1>

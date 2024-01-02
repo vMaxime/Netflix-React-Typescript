@@ -1,16 +1,21 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import Slider from "../components/Slider";
 import { ProfileInterface } from "../user";
 import ConfirmNewPicture from "./ConfirmNewPicture";
 
 interface EditProfilePictureProps {
     profile: ProfileInterface,
-    onCancel: Function
+    onChose(choice: string): void
 }
 
-const EditProfilePicture: React.FC<EditProfilePictureProps> = ({ profile, onCancel }) => {
+const EditProfilePicture: FC<EditProfilePictureProps> = ({ profile, onChose }) => {
 
     const [selectedPicture, setSelectedPicture] = useState<string | null>(null);
+
+    const handleChose = (choice: string | null) => {
+        if (choice != null)
+            onChose(choice);
+    };
 
     const pictures = [
         {
@@ -50,7 +55,7 @@ const EditProfilePicture: React.FC<EditProfilePictureProps> = ({ profile, onCanc
                 selectedPicture === null ?
                 <div className="flex justify-between px-2 xs:px-5 md:px-10 lg:px-14 mx-auto w-full mt-2" style={{ maxWidth: '1370px' }}>
                     <div className="flex items-center">
-                        <button className="p-2 md:p-0" onClick={() => onCancel()}>
+                        <button className="p-2 md:p-0" onClick={() => onChose(profile.picture)}>
                             <svg fill="#FFF" className="w-5 h-5 md:w-10 md:h-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M7.82843 10.9999H20V12.9999H7.82843L13.1924 18.3638L11.7782 19.778L4 11.9999L11.7782 4.22168L13.1924 5.63589L7.82843 10.9999Z"/>
                             </svg>
@@ -98,7 +103,7 @@ const EditProfilePicture: React.FC<EditProfilePictureProps> = ({ profile, onCanc
                 </div>
             </main>
             :
-            <ConfirmNewPicture profile={profile} newPicture={selectedPicture} onFinish={() => onCancel()} />
+            <ConfirmNewPicture profile={profile} newPicture={selectedPicture} onChose={handleChose} />
         }
     </>);
 };

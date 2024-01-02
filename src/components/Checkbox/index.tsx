@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { FC } from "react";
 
 interface CheckboxProps {
     checked: boolean
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ checked }) => {
+const Checkbox: FC<CheckboxProps> = ({ checked }) => {
     return (
         <button className="border border-dark w-4 h-4 relative">
             {

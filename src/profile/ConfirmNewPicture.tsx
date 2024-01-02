@@ -1,27 +1,13 @@
-import React, { useContext } from "react";
-import { ProfileInterface, UserDispatchContext } from "../user";
+import  { FC } from "react";
+import { ProfileInterface } from "../user";
 
 interface ConfirmNewPictureProps {
     profile: ProfileInterface,
     newPicture: string,
-    onFinish: Function
+    onChose(choice: string | null): void
 }
 
-const ConfirmNewPicture: React.FC<ConfirmNewPictureProps> = ({ profile, newPicture, onFinish }) => {
-
-    const dispatch = useContext(UserDispatchContext);
-
-    const handleSave = () => {
-        if (dispatch === null)
-            return;
-        
-        dispatch({
-            type: 'UPDATE_PROFILE_PICTURE',
-            target: profile.name,
-            payload: newPicture
-        });
-        onFinish();
-    };
+const ConfirmNewPicture: FC<ConfirmNewPictureProps> = ({ profile, newPicture, onChose }) => {
 
     return (<>
         <main className="absolute top-0 left-0 w-full h-full flex justify-center items-center px-5 sm:px-0" style={{ backgroundColor: '#141414' }}>
@@ -41,8 +27,8 @@ const ConfirmNewPicture: React.FC<ConfirmNewPictureProps> = ({ profile, newPictu
                     </div>
                 </div>
                 <div className="flex justify-center divider mt-5 py-10 gap-5 w-full px-2">
-                    <button className="button-classic-2 w-1/2 md:h-14" onClick={handleSave}><span className="text-base md:text-lg">C'est parti</span></button>
-                    <button className="button-classic w-1/2 md:h-14" onClick={() => onFinish()}><span className="text-base md:text-lg">Pas encore</span></button>
+                    <button className="button-classic-2 w-1/2 md:h-14" onClick={() => onChose(newPicture)}><span className="text-base md:text-lg">C'est parti</span></button>
+                    <button className="button-classic w-1/2 md:h-14" onClick={() => onChose(null)}><span className="text-base md:text-lg">Pas encore</span></button>
                 </div>
             </div>
         </main>

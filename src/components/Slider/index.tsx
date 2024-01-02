@@ -1,7 +1,7 @@
-import React, { cloneElement, PropsWithChildren, ReactElement, ReactNode, useEffect, useRef, useState } from 'react';
+import { FC, createRef, cloneElement, PropsWithChildren, ReactElement, ReactNode, useEffect, useState } from 'react';
 import './Slider.css';
 
-const Slider: React.FC<PropsWithChildren> = ({ children }) => {
+const Slider: FC<PropsWithChildren> = ({ children }) => {
 
     const [items, setItems] = useState<ReactNode>(children);
     const itemsArray = items as ReactNode[];
@@ -10,9 +10,9 @@ const Slider: React.FC<PropsWithChildren> = ({ children }) => {
     const [moving, setMoving] = useState(false);
     const [overflowing, setOverflowing] = useState(true);
 
-    const sliderRef = React.createRef<HTMLDivElement>();
-    const wrapperRef = React.createRef<HTMLDivElement>();
-    const buttonRef = React.createRef<HTMLButtonElement>();
+    const sliderRef = createRef<HTMLDivElement>();
+    const wrapperRef = createRef<HTMLDivElement>();
+    const buttonRef = createRef<HTMLButtonElement>();
 
     function isVisible(element: HTMLElement): boolean {
         const parentRect = document.documentElement.getBoundingClientRect();

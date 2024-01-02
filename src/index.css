@@ -71,6 +71,10 @@ footer {
     @apply p-2 text-xxs md:text-xs w-fit
 }
 
+.expand  {
+    width: 1000px;
+}
+
 @media (min-width: 768px) {
     #netflixLogo {
         height: 45px;
