@@ -1,0 +1,23 @@
+.modal-container {
+    box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 10px;
+    transition: transform 0.5s, opacity 0.5s;
+    opacity: 0;
+    transform: scale(0.5);
+
+    @apply h-full w-full rounded-md hover:cursor-pointer overflow-hidden m-auto opacity-0
+}
+
+.modal-container.show {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+}
+
+.modal-container.hide {
+    opacity: 1 !important;
+    transform: scale(0.7) !important;
+}
+
+.modal-content {
+    @apply flex flex-col gap-4 p-4 h-fit;
+    background-color: #181818;
+}

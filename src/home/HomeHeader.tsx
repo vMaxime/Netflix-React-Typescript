@@ -2,7 +2,7 @@ import { FC, useContext, useEffect, useState } from "react";
 import { ProfileInterface, UserContext, UserDispatchContext } from "../user";
 import SearchBar from "../components/SearchBar";
 import Dropdown from "../components/Dropdown";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 interface HomeHeaderProps {
     profile: ProfileInterface
@@ -41,6 +41,8 @@ const HomeHeader: FC<HomeHeaderProps> = ({ profile }) => {
             type: 'SELECT_PROFILE',
             payload: profile?.id || null
         });
+
+        navigate('/');
     };
 
     const toggleManaging = () => {
@@ -56,7 +58,7 @@ const HomeHeader: FC<HomeHeaderProps> = ({ profile }) => {
     }, []);
 
     return (
-        <header className="fixed w-full" style={{ backgroundColor }}>
+        <header className="fixed w-full z-20" style={{ backgroundColor }}>
             <div className="h-20 mx-auto px-12 flex gap-10">
                 <a href="/" className="flex items-center">
                     <svg fill="red" width="95" viewBox="0 0 111 30" aria-hidden="true" focusable="false">
@@ -64,9 +66,9 @@ const HomeHeader: FC<HomeHeaderProps> = ({ profile }) => {
                     </svg>
                 </a>
                 <nav className="flex items-center gap-5 flex-1">
-                    <a href="/" className={genre === null ? 'font-bold' : ''}>Accueil</a>
-                    <a href="/series" className={genre === 'series' ? 'font-bold' : ''}>Series</a>
-                    <a href="/films" className={genre === 'series' ? 'font-bold' : ''}>Films</a>
+                    <Link to="/">Accueil</Link>
+                    <Link to="series">Séries</Link>
+                    <Link to="films">Films</Link>
                     <a href="/news" className={genre === 'series' ? 'font-bold' : ''}>Nouveautés les plus regardées</a>
                     <a href="/list" className={genre === 'series' ? 'font-bold' : ''}>Ma liste</a>
                     <a href="/bylang" className={genre === 'series' ? 'font-bold' : ''}>Explorer par langue</a>

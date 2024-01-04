@@ -2,7 +2,7 @@ import { FC, useContext, useEffect, useState } from 'react';
 import Profile from '../profile';
 import { UserContext, findProfile } from '../user';
 import HomeHeader from './HomeHeader';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 interface HomeProps {
     searching?: boolean
@@ -70,36 +70,10 @@ const Home: FC<HomeProps> = ({ searching }) => {
     return (<>
         <HomeHeader profile={selectedProfile} />
         <main className="pt-20 px-12" style={{ backgroundColor: '#141414' }}>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, nisi architecto. Repudiandae aspernatur repellendus vitae, vero mollitia ut cum dolores, repellat officiis aut sunt ad voluptas voluptatibus recusandae facilis necessitatibus.</p>
+            <Outlet />
         </main>
-        <footer className="text-dark flex flex-col gap-5 py-6 px-4" style={{ backgroundColor: '#141414' }}>
-            <ul className="container mx-auto flex flex-wrap items-start text-xs gap-y-3 lg:px-40">
+        <footer className="text-dark flex flex-col gap-5 pb-6 pt-32 px-4" style={{ backgroundColor: '#141414' }}>
+            <ul className="container mx-auto flex flex-wrap items-start text-xs gap-y-3 lg:px-40 xl:px-56">
                 <li className="w-full flex gap-5">
                     <a href="https://www.facebook.com/netflixfrance" target="_blank">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="#FFF" xmlns="http://www.w3.org/2000/svg">

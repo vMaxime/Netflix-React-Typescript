@@ -3,17 +3,24 @@
 }
 
 .slider .move-left, .slider .move-right {
-    background: linear-gradient(270deg,#141414 0,hsla(0,0%,8%,.4));
     width: 4%;
-    @apply absolute top-0 h-full flex justify-center items-center z-10
+    @apply absolute top-0 h-full hidden z-10
 }
 
 .slider .move-left > svg, .slider .move-right > svg {
     @apply fill-white h-4 w-2
 }
 
+.shows .slider .move-left > svg, .shows .slider .move-right > svg {
+    @apply h-6 w-4
+}
+
 .slider .move-left:hover > svg, .slider .move-right:hover > svg {
     @apply h-6 w-4
+}
+
+.shows .slider .move-left:hover > svg, .shows .slider .move-right:hover > svg {
+    @apply h-8 w-6
 }
 
 .slider .move-left {
@@ -22,4 +29,8 @@
 
 .slider .move-right {
     @apply right-0 rounded-tl-md rounded-bl-md
+}
+
+.slider:hover .move-left, .slider:hover .move-right {
+    @apply flex justify-center items-center
 }

@@ -85,3 +85,25 @@ footer {
         @apply w-full mx-auto p-20
     }
 }
+
+@keyframes pulsateAnimation {
+    0% {
+        background-color: #1a1a1a;
+    }
+    25% {
+        background-color: #333;
+    }
+    50% {
+        background-color: #1a1a1a;
+    }
+    100% {
+        background-color: #1a1a1a;
+    }
+}
+
+.pulsate {
+    animation-duration: 3.6s;
+    animation-iteration-count: infinite;
+    animation-name: pulsateAnimation;
+    animation-timing-function: ease-in-out;
+}

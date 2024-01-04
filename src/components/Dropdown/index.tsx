@@ -24,6 +24,8 @@ const Dropdown: FC<PropsWithChildren<DropdownProps>> = ({ showOnHover, icon, wid
         className += ' hidden';
 
     const handleMouseEnter = () => {
+        if (contentRef.current != null)
+            contentRef.current.focus();
         setHideTimeoutId(hideTimeoutId => {
             if (hideTimeoutId != null)
                 clearTimeout(hideTimeoutId);
@@ -75,8 +77,8 @@ const Dropdown: FC<PropsWithChildren<DropdownProps>> = ({ showOnHover, icon, wid
         document.addEventListener('dropdownshow', handleDropdownShow);
         return () => {
             document.removeEventListener('dropdownshow', handleDropdownShow);
-            if (contentRef.current != null)
-                contentRef.current.removeEventListener('focusout', handleBlur);
+            if (hideTimeoutId != null)
+                clearTimeout(hideTimeoutId);
         };
     }, []);
 
