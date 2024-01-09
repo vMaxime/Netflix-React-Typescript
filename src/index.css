@@ -75,6 +75,18 @@ footer {
     width: 1000px;
 }
 
+.px-4p {
+    padding: 0 4%;
+}
+
+.mx-4p {
+    margin: 0 4%;
+}
+
+.p16x9 {
+    padding: 28.125% 0;
+}
+
 @media (min-width: 768px) {
     #netflixLogo {
         height: 45px;

@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { CSSProperties, FC, useState } from "react";
 import Slider from "../components/Slider";
 import { ProfileInterface } from "../user";
 import ConfirmNewPicture from "./ConfirmNewPicture";
@@ -37,23 +37,35 @@ const EditProfilePicture: FC<EditProfilePictureProps> = ({ profile, onChose }) =
     ];
 
     const pictureStyle = {
-        height: '21vw',
-        maxHeight: '132px',
-        width: '21vw',
-        maxWidth: '132px'
+        height: '10vw',
+        maxHeight: '200px',
+        width: '10vw',
+        maxWidth: '200px',
+        margin: '0 .5vw',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'contain',
+        backgroundPosition: '50%'
     }
 
     const gradientStyle = {
         height: '68px',
-        backgroundImage: 'linear-gradient(180deg,rgba(0,0,0,.7) 10%,transparent)'
+        backgroundImage: 'linear-gradient(180deg,rgba(0,0,0,.7) 10%,transparent)',
     };
+
+    const containerStyle: CSSProperties = {
+        width: '87%',
+        maxWidth: '1310px',
+        margin: '0 auto 1.5vw'
+    };
+
+    //<img src={source} style={pictureStyle} className="h-full w-full rounded-md border-white hover:border-2" alt={'Picture from ' + picture.name} /> 
 
     return (<>
         <header className="w-full z-10" style={{ backgroundColor: '#141414' }}>
             <div style={gradientStyle}></div>
             {
                 selectedPicture === null ?
-                <div className="flex justify-between px-2 xs:px-5 md:px-10 lg:px-14 mx-auto w-full mt-2" style={{ maxWidth: '1370px' }}>
+                <div className="flex justify-between w-full mt-2 mx-auto" style={containerStyle}>
                     <div className="flex items-center">
                         <button className="p-2 md:p-0" onClick={() => onChose(profile.picture)}>
                             <svg fill="#FFF" className="w-5 h-5 md:w-10 md:h-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -76,11 +88,11 @@ const EditProfilePicture: FC<EditProfilePictureProps> = ({ profile, onChose }) =
         {
             selectedPicture === null ?
             <main className="pt-10 w-full" style={{ backgroundColor: '#141414' }}>
-                <div className="flex flex-col gap-10 px-4 xs:px-5 md:px-10 lg:px-14 xl:px-20 mx-auto w-full" style={{ maxWidth: '1370px' }}>
+                <div className="flex flex-col gap-10 mx-auto w-full">
                     {
                         pictures.map(picture => 
                             <div key={picture.name} className="flex flex-col gap-1 md:gap-5">
-                                <div>
+                                <div className="w-full" style={containerStyle}>
                                 {
                                     picture.cover ?
                                     <img src={picture.cover} className="h-6 lg:h-10 w-auto" alt="Pictures cover" />
@@ -88,15 +100,16 @@ const EditProfilePicture: FC<EditProfilePictureProps> = ({ profile, onChose }) =
                                     picture.name
                                 }
                                 </div>
-                                <Slider>
-                                {
-                                    picture.sources.map((source, index) => 
-                                        <div key={index} className={"cursor-pointer slider-item-" + index} style={pictureStyle}>
-                                            <img src={source} onClick={() => setSelectedPicture(source)} style={pictureStyle} className="h-full w-full rounded-md border-white hover:border-2" alt={'Picture from ' + picture.name} /> 
-                                        </div>   
-                                    )
-                                }
-                                </Slider>
+                                <Slider
+                                    key={picture.name}
+                                    items={
+                                        picture.sources.map((source, index) => 
+                                            <button key={index} className="cursor-pointer" style={{ ...pictureStyle, backgroundImage: `url(${source})` }} onClick={() => setSelectedPicture(source)}>
+                                            </button>   
+                                        )
+                                    }
+                                    style={{maxWidth: '1320px', width: '88vw', margin: '0 auto'}}
+                                />
                             </div>
                         )
                     }
