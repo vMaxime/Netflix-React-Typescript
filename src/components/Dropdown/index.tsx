@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, ReactElement, createRef, useEffect, useState, MouseEvent } from "react";
+import { FC, PropsWithChildren, ReactElement, createRef, useEffect, useState, MouseEvent } from 'react';
 
 interface DropdownProps {
     showOnHover?: boolean,
@@ -42,12 +42,10 @@ const Dropdown: FC<PropsWithChildren<DropdownProps>> = ({ showOnHover, icon, wid
                 return;
         }
         
-        setHideTimeoutId(hideTimeoutId => {
-            if (hideTimeoutId != null)
-                clearTimeout(hideTimeoutId);
+        if (hideTimeoutId != null)
+            return;
 
-            return setTimeout(hide, 1000);
-        });
+        setHideTimeoutId(setTimeout(hide, 500));
     };
 
     const show = () => {
@@ -59,21 +57,21 @@ const Dropdown: FC<PropsWithChildren<DropdownProps>> = ({ showOnHover, icon, wid
     };
 
     const hide = () => {
-        setVisible(false);
+        setTimeout(() => setVisible(false), 100);
+    };
+
+    const handleBlur = () => {
+        if (visible)
+            hide();
     };
 
     useEffect(() => {
-        const handleBlur = (event: FocusEvent) => {
-            if (wrapperRef.current && !wrapperRef.current.contains(event.relatedTarget as Node))
-                hide();
-        };
-
         if (contentRef.current != null) {
             contentRef.current.focus();
-            contentRef.current.addEventListener('focusout', handleBlur);
+            contentRef.current.addEventListener('focu', handleBlur);
         }
 
-        const handleDropdownShow = () => hide();
+        const handleDropdownShow = () => hide;
         document.addEventListener('dropdownshow', handleDropdownShow);
         return () => {
             document.removeEventListener('dropdownshow', handleDropdownShow);
@@ -87,6 +85,8 @@ const Dropdown: FC<PropsWithChildren<DropdownProps>> = ({ showOnHover, icon, wid
             return;
 
         carpetRef.current.style.top = (wrapperRef.current.getBoundingClientRect().top + 5) + 'px';
+        if (contentRef.current != null)
+            contentRef.current.focus();
     }, [visible]);
 
     return (
@@ -98,13 +98,14 @@ const Dropdown: FC<PropsWithChildren<DropdownProps>> = ({ showOnHover, icon, wid
                 </svg>
             </button>
             {
+                !visible ? null :
                 <>
                     <div ref={carpetRef} className={'absolute w-full h-full flex' + (carpet ? ' pr-4' : '') + (!visible ? ' hidden' : '')} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                         <svg className="rotate-180 m-auto" fill="#FFF" xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 512 512">
                             <polygon points="64 144 256 368 448 144 64 144"/>
                         </svg>
                     </div>
-                    <div tabIndex={0} ref={contentRef} className={className} style={{ width: width || 'auto', maxWidth: width || 'none', backgroundColor: 'rgba(0,0,0,.9)' }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                    <div tabIndex={-1} autoFocus ref={contentRef} className={className} style={{ width: width || 'auto', maxWidth: width || 'none', backgroundColor: 'rgba(0,0,0,.9)' }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onBlur={handleBlur}>
                         { children }
                     </div>
                 </>

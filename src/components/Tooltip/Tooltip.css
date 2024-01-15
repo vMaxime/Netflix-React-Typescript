@@ -1,0 +1,22 @@
+.tooltip {
+    @apply absolute w-auto z-50;
+}
+
+.tooltip-content {
+    background-color: rgb(230, 230, 230);
+    @apply relative w-max py-2 px-6 text-zinc-900 font-medium rounded-sm;
+}
+
+.tooltip-content::after {
+    content: "";
+    display: block;
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-top: .7rem solid rgb(230, 230, 230);
+    border-left: .7rem solid transparent;
+    border-right: .7rem solid transparent;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 90%;
+}

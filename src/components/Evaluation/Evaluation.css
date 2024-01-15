@@ -1,0 +1,36 @@
+.evaluation-details {
+    transform-origin: center center;
+    border-radius: 3rem;
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 0px 2px 0px, rgba(0, 0, 0, 0.5) 0px 8px 16px 0px;
+    background-color: rgb(35, 35, 35);
+    transform: scale(.8);
+    transform-origin: center center;
+    opacity: 0;
+    transition: opacity .5s, transform .5s;
+    @apply absolute top-0 left-0 flex justify-center items-center w-40 p-3 gap-2 z-50;
+}
+
+.evaluation-details > button {
+    @apply relative flex items-center justify-center p-2 appearance-none select-none whitespace-nowrap hover:cursor-pointer outline-none rounded-full;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    word-break: break-word;
+    color: rgb(169, 169, 169);
+    width: 3.2rem;
+    height: 3.2rem;
+    max-height: 42px;
+    max-width: 42px;
+    min-height: 32px;
+    min-width: 32px;
+}
+
+.evaluation-details > button:hover {
+    background-color: rgba(128, 128, 128, 0.2) !important;
+    color: #FFF;
+}
+
+.evaluation-details > button > svg {
+    position: static;
+    height: 18px;
+    width: 18px;
+}

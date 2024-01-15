@@ -3,6 +3,8 @@ import { ProfileInterface } from './user';
 
 export type ShowType = 'film' | 'serie' | null;
 
+export type UserEvaluation = "bad" | "like" | "love"| null;
+
 export interface ShowInterface {
     id: number,
     name: string,
@@ -10,7 +12,7 @@ export interface ShowInterface {
     age: number,
     ageWhy: string,
     audiodescription: boolean,
-    duration: number,
+    duration: string,
     realisation: string[],
     scenarists: string[],
     description: string,
@@ -18,6 +20,7 @@ export interface ShowInterface {
     tags: string[],
     distribution: string[],
     picture: string,
+    recommended: number
 }
 
 export interface SectionInterface {
@@ -68,5 +71,14 @@ export const fetchSections = (profile: ProfileInterface, type: ShowType): Promis
 
         await wait(randomTimeout());
         resolve(sections);
+    });
+};
+
+export const fetchListShows = (profile: ProfileInterface): Promise<ShowInterface[]> => {
+    const _shows = data as [];
+    const shows = _shows as ShowInterface[];
+    return new Promise(async (resolve) => {
+        await wait(randomTimeout());
+        resolve(shows.filter(show => profile.list.includes(show.id)));
     });
 };

@@ -1,10 +1,16 @@
 import { createContext, Dispatch, ReactElement, useReducer } from 'react';
+import { UserEvaluation } from '../fakeApi';
 
 export interface NotificationInterface {
   title: string,
   subtitle: string,
   picture: string,
   date: Date
+}
+
+export interface ShowEvaluation {
+  showId: number,
+  evaluation: UserEvaluation
 }
 
 export interface ProfileInterface {
@@ -14,7 +20,9 @@ export interface ProfileInterface {
   alias: string | null,
   read_next_episode: boolean,
   read_preview: boolean,
-  notifications: NotificationInterface[]
+  notifications: NotificationInterface[],
+  list: number[],
+  evaluations: ShowEvaluation[]
 }
 
 export const findProfile = (user: UserInterface, id: string): ProfileInterface | null => {
@@ -37,7 +45,9 @@ const defaultProfiles: ProfileInterface[] = [
     alias: null,
     read_next_episode: true,
     read_preview: true,
-    notifications: []
+    notifications: [],
+    list: [0, 3, 9],
+    evaluations: []
   },
   {
     id: generateId(),
@@ -46,7 +56,9 @@ const defaultProfiles: ProfileInterface[] = [
     alias: null,
     read_next_episode: true,
     read_preview: true,
-    notifications: []
+    notifications: [],
+    list: [1, 4, 6],
+    evaluations: []
   }
 ];
 
@@ -72,14 +84,18 @@ if (initialState.token != null) {
 }
 
 type UserAction =
-  | { type: "LOGIN", payload: UserInterface }
-  | { type: "LOGOUT" }
-  | { type: "TOGGLE_MANAGING" }
-  | { type: "ADD_PROFILE", payload: ProfileInterface }
-  | { type: "UPDATE_PROFILE", payload: ProfileInterface }
-  | { type: "UPDATE_PROFILE_PICTURE", target: ProfileInterface, payload: string }
-  | { type: "REMOVE_PROFILE", payload: string }
-  | { type: "SELECT_PROFILE", payload: string | null };
+  | { type: 'LOGIN', payload: UserInterface }
+  | { type: 'LOGOUT' }
+  | { type: 'TOGGLE_MANAGING' }
+  | { type: 'ADD_PROFILE', payload: ProfileInterface }
+  | { type: 'UPDATE_PROFILE', payload: ProfileInterface }
+  | { type: 'UPDATE_PROFILE_PICTURE', target: ProfileInterface, payload: string }
+  | { type: 'REMOVE_PROFILE', payload: string }
+  | { type: 'SELECT_PROFILE', payload: string | null }
+  | { type: 'ADD_SHOW_TO_LIST', target: ProfileInterface, payload: number }
+  | { type: 'REMOVE_SHOW_FROM_LIST', target: ProfileInterface, payload: number }
+  | { type: 'SET_SHOW_EVALUATION', target: ProfileInterface, showId: number, evaluation: UserEvaluation }
+  | { type: 'REMOVE_SHOW_EVALUATION', target: ProfileInterface, showId: number };
   
 const reducer = (state: UserInterface, action: UserAction): UserInterface => {
     switch (action.type) {
@@ -142,6 +158,69 @@ const reducer = (state: UserInterface, action: UserAction): UserInterface => {
           selectedProfile: action.payload
         }
         sessionStorage.setItem('selected_profile', JSON.stringify(action.payload));
+        return user;
+      }
+      case 'ADD_SHOW_TO_LIST': {
+        const user = {
+          ...state,
+          profiles: [...state.profiles.map(profile => (
+            profile.id != action.target.id ? profile :
+              {
+                ...profile,
+                list: [...profile.list, action.payload]
+              }
+            )
+          )]
+        };
+        localStorage.setItem('user', JSON.stringify(user));
+        return user;
+      }
+      case 'REMOVE_SHOW_FROM_LIST': {
+        const user = {
+          ...state,
+          profiles: [...state.profiles.map(profile => (
+            profile.id != action.target.id ? profile :
+              {
+                ...profile,
+                list: profile.list.filter(showId => showId != action.payload)
+              }
+            )
+          )]
+        };
+        localStorage.setItem('user', JSON.stringify(user));
+        return user;
+      }
+      case 'SET_SHOW_EVALUATION': {
+        const evaluations = action.target.evaluations.filter(showEval => showEval.showId != action.showId);
+        evaluations.push({ showId: action.showId, evaluation: action.evaluation });
+        const newProfile = {
+          ...action.target,
+          evaluations
+        };
+
+        const user = {
+          ...state,
+          profiles: [...state.profiles.map(profile => (
+            profile.id != action.target.id ? profile : newProfile
+          ))]
+        };
+        localStorage.setItem('user', JSON.stringify(user));
+        return user;
+      }
+      case 'REMOVE_SHOW_EVALUATION': {
+        const evaluations = action.target.evaluations.filter(showEval => showEval.showId != action.showId);
+        const newProfile = {
+          ...action.target,
+          evaluations
+        };
+        
+        const user = {
+          ...state,
+          profiles: [...state.profiles.map(profile => (
+            profile.id != action.target.id ? profile : newProfile
+          ))]
+        };
+        localStorage.setItem('user', JSON.stringify(user));
         return user;
       }
       default:

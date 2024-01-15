@@ -1,6 +1,6 @@
 .modal {
     box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 10px;
-    @apply flex flex-col absolute z-20 h-fit w-fit outline-none;
+    @apply flex flex-col absolute z-50 h-fit w-fit outline-none select-none;
 }
 
 .modal-content {
@@ -17,4 +17,14 @@
 .modal-body {
     @apply flex flex-col gap-4 p-4 h-fit rounded-b-md;
     background-color: #181818;
+}
+
+.evidence-separator {
+    @apply mr-2;
+}
+
+.evidence-separator::before {
+    color: #646464;
+    content: "\2022";
+    display: inline-block;
 }

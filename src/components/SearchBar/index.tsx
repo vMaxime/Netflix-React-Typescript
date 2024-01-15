@@ -1,4 +1,4 @@
-import { FC, createRef, useEffect, useState, ChangeEvent } from "react";
+import { FC, createRef, useEffect, useState, ChangeEvent } from 'react';
 import { useNavigate } from "react-router-dom";
 
 interface SearchBarProps {
@@ -51,7 +51,6 @@ const SearchBar: FC<SearchBarProps> = ({ className, onCancel }) => {
             return;
         
         inputRef.current.focus();
-        inputRef.current;
         if (!wrapperRef.current.classList.contains('expand'))
             wrapperRef.current.classList.add('expand');
     }, [expanded]);

@@ -6,14 +6,15 @@
         "age": 16,
         "age_why": "violence",
         "audiodescription": true,
-        "duration": 118,
+        "duration": "1 h 58 min",
         "realisation": ["Lorem ipsum", "dolor-sit", "amet"],
         "scenarists": ["scenarist1", "scenarist2"],
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent fermentum massa ac dui faucibus, nec pharetra urna viverra. Sed feugiat elit tortor, vel aliquam orci accumsan sit amet.",
         "type": "film",
         "tags": ["Lorem", "ipsum", "dolor"],
         "distribution": ["Lorem", "ipsum", "dolor", "sit", "amet"],
-        "picture": "https://occ-0-6302-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABew74MtBbS8_jM3NDuHxS-rpKPzzu61fON6UQCTrWG5NZTXHUICpxSGHGLeRoF4d0aqjA7wsVGiwYe-UTokEF-j9Hrd9EABEi75d7UPUaNSnkyn5vO0kGD704SZWmSAAb-sB.jpg?r=16e"
+        "picture": "https://occ-0-6302-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABew74MtBbS8_jM3NDuHxS-rpKPzzu61fON6UQCTrWG5NZTXHUICpxSGHGLeRoF4d0aqjA7wsVGiwYe-UTokEF-j9Hrd9EABEi75d7UPUaNSnkyn5vO0kGD704SZWmSAAb-sB.jpg?r=16e",
+        "recommended": 12
     },
     {
         "id": 1,
@@ -22,14 +23,15 @@
         "age": 16,
         "age_why": "violence",
         "audiodescription": false,
-        "duration": 125,
+        "duration": "2 h 5 min",
         "realisation": ["Lorem ipsum", "dolor-sit", "amet"],
         "scenarists": ["scenarist1", "scenarist2"],
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent fermentum massa ac dui faucibus, nec pharetra urna viverra. Sed feugiat elit tortor, vel aliquam orci accumsan sit amet.",
         "type": "film",
         "tags": ["Lorem", "ipsum", "dolor"],
         "distribution": ["Lorem", "ipsum", "dolor", "sit", "amet"],
-        "picture": "https://occ-0-6302-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABajrslPHuEV-OxXae_WBedZ7d1bbFPvohy5Iq1IYioD9992Xv5KxpQ7fwkaFnoPgY28lgLyHp2w7MUBtNAZfBOBpVUXc3-fABfS942dgW2fBxah2h5imzm24LOVGV3S6nPbwcQ.jpg?r=490"
+        "picture": "https://occ-0-6302-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABajrslPHuEV-OxXae_WBedZ7d1bbFPvohy5Iq1IYioD9992Xv5KxpQ7fwkaFnoPgY28lgLyHp2w7MUBtNAZfBOBpVUXc3-fABfS942dgW2fBxah2h5imzm24LOVGV3S6nPbwcQ.jpg?r=490",
+        "recommended": 81
     },
     {
         "id": 2,
@@ -38,14 +40,15 @@
         "age": 16,
         "age_why": "violence",
         "audiodescription": false,
-        "duration": 126,
+        "duration": "2 h 6 min",
         "realisation": ["Lorem ipsum", "dolor-sit", "amet"],
         "scenarists": ["scenarist1", "scenarist2"],
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent fermentum massa ac dui faucibus, nec pharetra urna viverra. Sed feugiat elit tortor, vel aliquam orci accumsan sit amet.",
         "type": "film",
         "tags": ["Lorem", "ipsum", "dolor"],
         "distribution": ["Lorem", "ipsum", "dolor", "sit", "amet"],
-        "picture": "https://occ-0-6302-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABScHZJctj1rOc8A91SoPbl3Xc11f7o4jRyTfRYXFmUrlyn6eXAc05lB1E8bXapQx0y_jK6o_lr73_gD_7s1WRaijsrylcor5I2y_GBZsCCNawIXadexhtHXI9CmYYehdJWUPCQ.jpg?r=0dd"
+        "picture": "https://occ-0-6302-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABScHZJctj1rOc8A91SoPbl3Xc11f7o4jRyTfRYXFmUrlyn6eXAc05lB1E8bXapQx0y_jK6o_lr73_gD_7s1WRaijsrylcor5I2y_GBZsCCNawIXadexhtHXI9CmYYehdJWUPCQ.jpg?r=0dd",
+        "recommended": 94
     },
     {
         "id": 3,
@@ -54,14 +57,15 @@
         "age": 16,
         "age_why": "violence",
         "audiodescription": false,
-        "duration": 128,
+        "duration": "2 h 8 min",
         "realisation": ["Lorem ipsum", "dolor-sit", "amet"],
         "scenarists": ["Ryan Reynolds", "Mélanie Laurent", "Corey Hawkins", "Dave Franco", "Adria Arjona", "Manuel Garcia-Rulfo", "Ben Hardy", "Lior Raz", "Payman Maadi", "Yuri Kolokolnikov", "Kim Kold"],
         "description": "Un milliardaire confie à une équipe d'agents internationaux qui ont simulé leur propre mort une mission risquée et sanglante destinée à neutraliser un violent dictateur.",
         "type": "film",
         "tags": ["Lorem", "ipsum", "dolor"],
         "distribution": ["Lorem", "ipsum", "dolor", "sit", "amet"],
-        "picture": "https://occ-0-6302-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABdBILfv_J_0NCxPLcGWkG0PatFEWFhsDFsPGZO0j-1MaxrJaskEc9OFj8b7NKrJaWFrQ6CATBHAnD5lyvPbBJd3j3Eye_jCKhL5tgSNm1R4R-bAOsQv9M969vgoI8NrxzUwluw.jpg?r=e5b"
+        "picture": "https://occ-0-6302-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABdBILfv_J_0NCxPLcGWkG0PatFEWFhsDFsPGZO0j-1MaxrJaskEc9OFj8b7NKrJaWFrQ6CATBHAnD5lyvPbBJd3j3Eye_jCKhL5tgSNm1R4R-bAOsQv9M969vgoI8NrxzUwluw.jpg?r=e5b",
+        "recommended": 97
     },
     {
         "id": 4,
@@ -70,7 +74,7 @@
         "age": 16,
         "age_why": "violence, langage grossier",
         "audiodescription": false,
-        "duration": 102,
+        "duration": "1 h 42 min",
         "realisation": ["Lorem ipsum", "dolor-sit", "amet"],
         "scenarists": ["Julien Royal", "Nassim Lyes"],
         "description": "Entre un arnaqueur dans la dèche et une millionnaire en crypto, le courant passe plutôt bien. Est-elle la cible idéale… ou l'escroc est-il sur le point de se faire escroquer ?",
@@ -78,7 +82,8 @@
         "tags": ["Décalé", "Romantique", "Comédie d'action"],
         "genres": ["Français", "Comédies romantiques", "Comédies"],
         "distribution": ["Lorem", "ipsum", "dolor", "sit", "amet"],
-        "picture": "https://occ-0-2216-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABTcIVaTxsAJ43h9hutc5yN0Yuq4xE-earoiXBS4aCkH25aVdKuBcKmimQJlbHvwmY0dQVdY-uNHsuG9VVTEx2Ga0BX87UdZjN93ug6DKN7pfrIxT3dy9oZUUDNT2SgsLfErWQw.jpg?r=1b2"
+        "picture": "https://occ-0-2216-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABTcIVaTxsAJ43h9hutc5yN0Yuq4xE-earoiXBS4aCkH25aVdKuBcKmimQJlbHvwmY0dQVdY-uNHsuG9VVTEx2Ga0BX87UdZjN93ug6DKN7pfrIxT3dy9oZUUDNT2SgsLfErWQw.jpg?r=1b2",
+        "recommended": 58
     },
     {
         "id": 5,
@@ -87,7 +92,7 @@
         "age": 13,
         "age_why": null,
         "audiodescription": false,
-        "duration": 169,
+        "duration": "2 h 49 min",
         "realisation": ["Christopher Nolan"],
         "scenarists": ["Julien Royal", "Nassim Lyes"],
         "description": "Tandis que l'humanité se meurt sur Terre, un groupe d'astronautes voyage à travers un trou de ver à la recherche d'une autre planète habitable.",
@@ -95,7 +100,8 @@
         "tags": ["Décalé", "Romantique", "Comédie d'action"],
         "genres": ["Français", "Comédies romantiques", "Comédies"],
         "distribution": ["Lorem", "ipsum", "dolor", "sit", "amet"],
-        "picture": "https://occ-0-2216-55.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABbClkTU7LkxdPH5ElN-XaRp61bf_tCrbPYWkP9Hkb12t5Hd0kHip2U8ZtdIZxsbe1r1Yrk-m1humbpYcoEv6mfvfzsAMfjoal1sF.webp?r=a79"
+        "picture": "https://occ-0-2216-55.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABbClkTU7LkxdPH5ElN-XaRp61bf_tCrbPYWkP9Hkb12t5Hd0kHip2U8ZtdIZxsbe1r1Yrk-m1humbpYcoEv6mfvfzsAMfjoal1sF.webp?r=a79",
+        "recommended": 62
     },
     {
         "id": 6,
@@ -104,7 +110,7 @@
         "age": 13,
         "age_why": null,
         "audiodescription": false,
-        "duration": 97,
+        "duration": "1 h 37 min",
         "realisation": ["Barry Sconnefeld"],
         "scenarists": ["Ed Solomon"],
         "description": "Un bouillant policier new-yorkais forme avec un agent du gouvernement pragmatique une équipe top secrète dont la mission consiste à surveiller les aliens sur Terre.",
@@ -112,7 +118,8 @@
         "tags": ["Aliens et SF", "Duo de flics", "Film hollywoodien"],
         "genres": ["Films SF", "Comédies", "Films d'action"],
         "distribution": ["Will Smith", "ipsum", "dolor", "sit", "amet"],
-        "picture": "https://occ-0-2216-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABcq-N9odXud-Z8h6-evKvfBqvFl3cLhuTAn8jcYLD7dv6aivUqusgb6mqRo4I5xZNlIYJuA679O445RBF3wvrNO7lx3Rk2omRULS.webp?r=6a6"
+        "picture": "https://occ-0-2216-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABcq-N9odXud-Z8h6-evKvfBqvFl3cLhuTAn8jcYLD7dv6aivUqusgb6mqRo4I5xZNlIYJuA679O445RBF3wvrNO7lx3Rk2omRULS.webp?r=6a6",
+        "recommended": 76
     },
     {
         "id": 7,
@@ -121,7 +128,7 @@
         "age": 13,
         "age_why": null,
         "audiodescription": true,
-        "duration": 115,
+        "duration": "1 h 55 min",
         "realisation": ["Mélanie Laurent"],
         "scenarists": ["Mélanie Laurent", "Christophe Deslandes", "Cédric Anger"],
         "description": "Lassée de la clandestinité, une voleuse professionnelle décide de se ranger… après une dernière mission de routine avec sa complice de toujours et une fougueuse nouvelle recrue.",
@@ -129,7 +136,8 @@
         "tags": ["Décalé", "Comédie d'action", "Comedy duo"],
         "genres": ["Français", "Comédies", "Films d'action"],
         "distribution": ["Adèle Exarchopoulos", "ipsum", "dolor", "sit", "amet"],
-        "picture": "https://occ-0-2216-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABdLGDRI1-nmejlGp2tAVCcVJZt_UMWR8Yiijoo8P079OGUvD_Tp2gnu6YrhWTUSJ46YPqhNmtc5aOezonfWKjSNHIGXwbIul95j64mg8clavz0zMvPxyss40-EeYnksSGr7YLA.jpg?r=6b8"
+        "picture": "https://occ-0-2216-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABdLGDRI1-nmejlGp2tAVCcVJZt_UMWR8Yiijoo8P079OGUvD_Tp2gnu6YrhWTUSJ46YPqhNmtc5aOezonfWKjSNHIGXwbIul95j64mg8clavz0zMvPxyss40-EeYnksSGr7YLA.jpg?r=6b8",
+        "recommended": 84
     },
     {
         "id": 8,
@@ -138,7 +146,7 @@
         "age": 16,
         "age_why": null,
         "audiodescription": true,
-        "duration": 194,
+        "duration": "1 h 34 min",
         "realisation": ["Lionel Steketee", "Fabrice éboué", "Thomas Ngijol"],
         "scenarists": ["Mélanie Laurent", "Christophe Deslandes", "Cédric Anger"],
         "description": "Aux Antilles, deux frères sont renvoyés dans le passé pour faire l'expérience directe de l'esclavage après avoir manqué de respect à leur père sur son lit de mort.",
@@ -146,7 +154,8 @@
         "tags": ["Comédie", "Comedy duo", "Voyage dans le temps"],
         "genres": ["Français", "Comédies"],
         "distribution": ["Fabrice Éboué", "Thomas Ngijol", "dolor", "sit", "amet"],
-        "picture": "https://occ-0-2216-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABUOzqcjFu33DPYHggCHwAQr8KwPw5oepDnnqsEJr0FH_IvybNlccXpaGiS1Xp4AWdS0MarZGPowm1gVRkJEIcyu5_fWNHX-82_jW.webp?r=2ba"
+        "picture": "https://occ-0-2216-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABUOzqcjFu33DPYHggCHwAQr8KwPw5oepDnnqsEJr0FH_IvybNlccXpaGiS1Xp4AWdS0MarZGPowm1gVRkJEIcyu5_fWNHX-82_jW.webp?r=2ba",
+        "recommended": 90
     },
     {
         "id": 9,
@@ -155,7 +164,7 @@
         "age": 13,
         "age_why": null,
         "audiodescription": true,
-        "duration": 84,
+        "duration": "1 h 24 min",
         "realisation": ["Justin Lin"],
         "scenarists": ["Mélanie Laurent", "Christophe Deslandes", "Cédric Anger"],
         "description": "Envoyé au Japon après un rodéo urbain qui a mal tourné, un jeune Américain tente de se perfectionner dans l'art audacieux du drift afin d'affronter un dangereux rival.",
@@ -163,6 +172,7 @@
         "tags": ["Explosif", "À l'esthétique léchée", "Thriller d'action"],
         "genres": ["Films d'action"],
         "distribution": ["Lucas black", "Sung Kang", "Bow Wow", "sit", "amet"],
-        "picture": "https://occ-0-2216-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABY81GrkbNUoi_dgg9MtEVhRSijCjMQL0IRL0C_0XDZSwF8he4Zw0uOPHaPOuI4OD_EKqXeIcgfDOFDwvdj59dkr-LlruDca2aSRr.webp?r=bbd"
+        "picture": "https://occ-0-2216-55.1.nflxso.net/dnm/api/v6/6gmvu2hxdfnQ55LZZjyzYR4kzGk/AAAABY81GrkbNUoi_dgg9MtEVhRSijCjMQL0IRL0C_0XDZSwF8he4Zw0uOPHaPOuI4OD_EKqXeIcgfDOFDwvdj59dkr-LlruDca2aSRr.webp?r=bbd",
+        "recommended": 96
     }
 ]

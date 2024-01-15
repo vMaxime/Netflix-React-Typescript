@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useState } from "react";
+import { CSSProperties, FC, useState } from 'react';
 import Slider from "../components/Slider";
 import { ProfileInterface } from "../user";
 import ConfirmNewPicture from "./ConfirmNewPicture";

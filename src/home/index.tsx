@@ -3,6 +3,7 @@ import Profile from '../profile';
 import { UserContext, findProfile } from '../user';
 import HomeHeader from './HomeHeader';
 import { Outlet, useNavigate } from 'react-router-dom';
+import './Home.css';
 
 interface HomeProps {
     searching?: boolean
@@ -43,7 +44,6 @@ const Home: FC<HomeProps> = ({ searching }) => {
         
         window.addEventListener('searchQueryChange', handleQueryChange);
         return () => {
-            console.log('bye')
             window.removeEventListener('searchQueryChange', handleQueryChange);
             if (searchTimeoutId != null) {
                 clearTimeout(searchTimeoutId);
@@ -69,7 +69,7 @@ const Home: FC<HomeProps> = ({ searching }) => {
 
     return (<>
         <HomeHeader profile={selectedProfile} />
-        <main className="pt-20" style={{ backgroundColor: '#141414' }}>
+        <main style={{ backgroundColor: '#141414' }}>
             <Outlet />
         </main>
         <footer className="text-dark flex flex-col gap-5 pb-6 pt-32 px-4" style={{ backgroundColor: '#141414' }}>

@@ -1,0 +1,3 @@
+.video {
+    @apply h-fit w-full relative;
+}
