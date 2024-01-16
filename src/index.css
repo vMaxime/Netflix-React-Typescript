@@ -119,3 +119,8 @@ footer {
     animation-name: pulsateAnimation;
     animation-timing-function: ease-in-out;
 }
+
+.chevron {
+    transform: rotate(0deg);
+    transition: transform 367ms cubic-bezier(.21,0,.07,1);
+}

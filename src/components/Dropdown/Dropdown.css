@@ -1,0 +1,9 @@
+.dropdown {
+    background-color: rgba(0,0,0,.9);
+    @apply absolute border-none border-white outline-none;
+}
+
+.account-dropdown-content {
+    min-width: 200px;
+    @apply w-full py-2;
+}

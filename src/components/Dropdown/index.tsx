@@ -1,117 +1,119 @@
-import { FC, PropsWithChildren, ReactElement, createRef, useEffect, useState, MouseEvent } from 'react';
+import { FC, cloneElement, createRef, ReactNode, ReactElement, useState, ReactPortal, CSSProperties, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import './Dropdown.css';
+import { getAbsolutePosition } from '../../utils';
 
-interface DropdownProps {
-    showOnHover?: boolean,
-    icon: ReactElement | string,
-    width?: string,
-    border?: boolean,
-    carpet?: boolean
+export interface DropdownShowEvent {
+    target: HTMLElement
 }
 
-const Dropdown: FC<PropsWithChildren<DropdownProps>> = ({ showOnHover, icon, width, border, carpet, children }) => {
+interface DropdownProps {
+    children?: ReactNode,
+    icon: ReactElement,
+    borderTop?: boolean
+}
 
-    const contentRef = createRef<HTMLDivElement>();
-    const carpetRef = createRef<HTMLDivElement>();
-    const wrapperRef = createRef<HTMLDivElement>();
-    const [visible, setVisible] = useState<boolean>(false);
+const Dropdown: FC<DropdownProps> = ({ icon, children, borderTop }) => {
+    const ref = createRef();
+
+    const [portal, setPortal] = useState<ReactPortal | null>(null);
     const [hideTimeoutId, setHideTimeoutId] = useState<number | null>(null);
 
-    let className = 'absolute top-0 right-0 bg-black mt-12 flex flex-wrap outline-none';
-    if (border)
-        className += ' border-t border-white-2';
+    const show = () => {
+        const relativeElement = ref.current as HTMLElement;
+        if (!relativeElement)
+            return;
 
-    if (!visible)
-        className += ' hidden';
+        setPortal(prevPortal => {
+            if (prevPortal != null)
+                return prevPortal;
 
-    const handleMouseEnter = () => {
-        if (contentRef.current != null)
-            contentRef.current.focus();
-        setHideTimeoutId(hideTimeoutId => {
-            if (hideTimeoutId != null)
-                clearTimeout(hideTimeoutId);
-            return null;
+            return createPortal(
+                <DropdownContent relativeElement={relativeElement} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave} borderTop={borderTop}>
+                    {children}
+                </DropdownContent>,
+                document.getElementById('root')!
+            );
         });
     };
 
-    const handleMouseLeave = (e: MouseEvent) => {
-        if (wrapperRef.current != null) {
-            const rect = wrapperRef.current.getBoundingClientRect();
-            const mouseX = e.clientX - rect.left;
-            const mouseY = e.clientY - rect.top;
-            if (mouseX >= 0 && mouseX <= wrapperRef.current.clientWidth && mouseY >= 0 && mouseY <= wrapperRef.current.clientHeight)
-                return;
-        }
-        
-        if (hideTimeoutId != null)
-            return;
+    const hide = () => setPortal(null);
 
-        setHideTimeoutId(setTimeout(hide, 500));
+    const handleMouseOver = () => {
+        setHideTimeoutId(prevId => {
+            if (prevId != null)
+                clearTimeout(prevId);
+            return null;
+        });
+        show();
     };
-
-    const show = () => {
-        if (visible)
-            return;
-        handleMouseEnter();
-        document.dispatchEvent(new Event('dropdownshow'));
-        setVisible(true);
-    };
-
-    const hide = () => {
-        setTimeout(() => setVisible(false), 100);
-    };
-
-    const handleBlur = () => {
-        if (visible)
+    const handleMouseLeave = () => {
+        setHideTimeoutId(setTimeout(() => {
+            setHideTimeoutId(null);
             hide();
+        }, 300));
     };
 
     useEffect(() => {
-        if (contentRef.current != null) {
-            contentRef.current.focus();
-            contentRef.current.addEventListener('focu', handleBlur);
-        }
+        if (ref.current === null)
+            return;
 
-        const handleDropdownShow = () => hide;
-        document.addEventListener('dropdownshow', handleDropdownShow);
-        return () => {
-            document.removeEventListener('dropdownshow', handleDropdownShow);
-            if (hideTimeoutId != null)
-                clearTimeout(hideTimeoutId);
-        };
+        const relativeElement = ref.current as HTMLElement;
+        const chevron = relativeElement.querySelector('.chevron') as HTMLElement;
+        if (chevron)
+            chevron.style.transform = 'rotate(' + (portal === null ? 0 : 180) + 'deg)';
+
+        if (portal != null)
+            document.dispatchEvent(new Event('dropdownshow'));
+        
+        document.addEventListener('dropdownshow', hide);
+        return () => document.removeEventListener('dropdownshow', hide);
+    }, [portal]);
+
+    return (<>
+        { cloneElement(icon, { onMouseOver: handleMouseOver, onMouseLeave: handleMouseLeave, onClick: show, ref }) }
+        { portal }
+    </>);
+};
+
+interface DropdownContentProps {
+    children?: ReactNode,
+    relativeElement: HTMLElement,
+    onMouseOver(): void,
+    onMouseLeave(): void,
+    borderTop?: boolean
+}
+
+const DropdownContent: FC<DropdownContentProps> = ({ children, relativeElement, onMouseOver, onMouseLeave, borderTop }) => {
+    const ref = createRef<HTMLDivElement>();
+    const [style, setStyle] = useState<CSSProperties>({borderTop: borderTop ? '1px solid' : ''});
+
+    useEffect(() => {
+        if (ref.current === null)
+            return;
+
+        const { width } = ref.current.getBoundingClientRect();
+
+        const relativeRect = relativeElement.getBoundingClientRect();
+        const [relativeTop, relativeLeft] = getAbsolutePosition(relativeElement);
+        const relativeHeight = relativeRect.height;
+        const relativeWidth = relativeRect.width;
+
+        const top = relativeTop + relativeHeight;
+        const left = relativeLeft - width + relativeWidth;
+
+        setStyle({...style,
+            top: `calc(${top}px + 1rem)`,
+            left: left + 'px'
+        });
+        ref.current.focus();
     }, []);
 
-    useEffect(() => {
-        if (!visible || carpetRef.current === null || wrapperRef.current === null)
-            return;
-
-        carpetRef.current.style.top = (wrapperRef.current.getBoundingClientRect().top + 5) + 'px';
-        if (contentRef.current != null)
-            contentRef.current.focus();
-    }, [visible]);
-
     return (
-        <div ref={wrapperRef} className="relative flex" onClick={show}>
-            <button className={'relative' + (carpet ? ' mr-5' : '')} onMouseEnter={() => { if (showOnHover) show(); }} onMouseLeave={handleMouseLeave}>
-                {icon}
-                <svg className={carpet ? 'absolute -right-5 top-1/4' : 'hidden'} fill="#FFF" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512">
-                    <polygon points="64 144 256 368 448 144 64 144"/>
-                </svg>
-            </button>
-            {
-                !visible ? null :
-                <>
-                    <div ref={carpetRef} className={'absolute w-full h-full flex' + (carpet ? ' pr-4' : '') + (!visible ? ' hidden' : '')} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                        <svg className="rotate-180 m-auto" fill="#FFF" xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 512 512">
-                            <polygon points="64 144 256 368 448 144 64 144"/>
-                        </svg>
-                    </div>
-                    <div tabIndex={-1} autoFocus ref={contentRef} className={className} style={{ width: width || 'auto', maxWidth: width || 'none', backgroundColor: 'rgba(0,0,0,.9)' }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onBlur={handleBlur}>
-                        { children }
-                    </div>
-                </>
-            }
+        <div tabIndex={-1} autoFocus className="dropdown" ref={ref} style={style} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
+            { children }
         </div>
     );
-}
+};
 
 export default Dropdown;
