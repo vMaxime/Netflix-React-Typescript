@@ -1,6 +1,6 @@
 import { FC, createRef } from 'react';
 import { ShowInterface } from "../../fakeApi";
-import ShowItemModal from './Modal/index2';
+import ShowItemModal from './Modal';
 
 interface ShowItemProps {
     show: ShowInterface

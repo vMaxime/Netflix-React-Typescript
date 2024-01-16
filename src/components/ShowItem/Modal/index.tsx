@@ -1,29 +1,154 @@
-import { createRef, CSSProperties, FC, useContext, useEffect, useState } from 'react';
+import { createRef, CSSProperties, FC, ReactNode, ReactElement, useContext, useState, cloneElement, useEffect } from 'react';
 import { ShowInterface } from '../../../fakeApi';
 import Tooltip from '../../Tooltip';
 import Evaluation from '../../Evaluation';
 import { findProfile, UserContext, UserDispatchContext } from '../../../user';
+import { createPortal } from 'react-dom';
+import { getAbsolutePosition } from '../../../utils';
 
 export interface ShowItemModalProps {
-    show: ShowInterface,
-    showItemRect: DOMRect,
-    relativeRect: DOMRect,
-    removeModal(): void
+    children: ReactNode,
+    show: ShowInterface
 }
 
-const ShowItemModal: FC<ShowItemModalProps> = ({ show, showItemRect, relativeRect, removeModal }) => {
+const ShowItemModal: FC<ShowItemModalProps> = ({ children, show }) => {
+
+    const ref = createRef<HTMLElement>();
+
+    const [modalState, setModalState] = useState<ShowModalState | null>(null);
+    const [stateTimeoutId, setStateTimeoutId] = useState<number | null>(null);
+    const [showTimeoutId, setShowTimeoutId] = useState<number | null>(null);
+
+    const [relativeElement, setRelativeElement] = useState<HTMLElement | null>(null);
+
+    const handleMouseOver = () => {
+        if (modalState != null || showTimeoutId != null)
+            return;
+
+        setShowTimeoutId(setTimeout(() => {
+            setShowTimeoutId(null);
+            setModalState('showing');
+        }, 400)); // show modal delay
+
+        setStateTimeoutId(setTimeout(() => {
+            setModalState('visible');
+            setStateTimeoutId(null);
+        }, 900)); // show timeout + animation duration
+    };
+
+    const handleMouseLeave = () => {
+        if (showTimeoutId != null && stateTimeoutId != null) {
+            clearTimeout(showTimeoutId);
+            clearTimeout(stateTimeoutId);
+            setShowTimeoutId(null);
+            setStateTimeoutId(null);
+            return;
+        }
+    };
+
+    const hide = () => {
+        setModalState('hiding');
+        setStateTimeoutId(setTimeout(() => {
+            setModalState(null);
+            setStateTimeoutId(null);
+        }, 500)); // animation duration
+    };
+
+    useEffect(() => {
+        if (ref.current === null)
+            return;
+        setRelativeElement(ref.current);
+    }, []);
+
+    return (<>
+        {
+            cloneElement(children as ReactElement, { onMouseEnter: handleMouseOver, onMouseLeave: handleMouseLeave, ref })
+        }
+        {
+            modalState != null && relativeElement != null ? 
+            createPortal(<ShowModal key={show.id} show={show} onMouseLeave={hide} state={modalState} relativeElement={relativeElement} />, document.getElementById('root')!)
+            : null
+        }
+    </>);
+};
+
+type ShowModalState = 'showing' | 'visible' | 'hiding';
+
+interface ShowModalProps {
+    show: ShowInterface,
+    onMouseLeave(): void,
+    state: ShowModalState,
+    relativeElement: HTMLElement
+}
+
+const ShowModal: FC<ShowModalProps> = ({ show, onMouseLeave, state, relativeElement }) => {
 
     const user = useContext(UserContext);
     const selectedProfile = user != null && user.selectedProfile != null ? findProfile(user, user.selectedProfile) : null;
     const profileList: number[] = selectedProfile != null ? selectedProfile.list : [];
-    const showIsInList = profileList.includes(show.id);
+    const inProfileList = profileList.includes(show.id);
     const dispatch = useContext(UserDispatchContext);
 
-    const modalRef = createRef<HTMLDivElement>();
+    const ref = createRef<HTMLDivElement>();
 
-    const [modalStyle, setModalStyle] = useState<CSSProperties>({});
-    const [showing, setShowing] = useState<boolean>(false);
-    const [hiding, setHiding] = useState<boolean>(false);
+    const [style, setStyle] = useState<CSSProperties>({});
+
+    useEffect(() => {
+        if (ref.current === null)
+            return;
+
+        const { width, height } = ref.current.getBoundingClientRect();
+        const relativeRect = relativeElement.getBoundingClientRect();
+        const startScaleX = relativeRect.width / width;
+        const startScaleY = relativeRect.height / height;
+
+        const [relativeTop, relativeLeft] = getAbsolutePosition(relativeElement);
+        let top = relativeTop + ((relativeRect.height - height) / 2);
+        let left = relativeLeft + ((relativeRect.width - width) / 2);
+        let transformOrigin = 'center center';
+
+        const sliderElement = relativeElement.closest('.slider-mask') as HTMLElement;
+        if (sliderElement != null) {
+            const sliderRect = sliderElement.getBoundingClientRect();
+            const minLeft = sliderRect.left;
+            const maxLeft = sliderRect.right - width;
+            if (minLeft >= left) {
+                transformOrigin = 'center left';
+                left = minLeft;
+            } else if (maxLeft <= left) {
+                transformOrigin = 'center right';
+                left = maxLeft;
+            }
+        }
+
+        let timeoutId: number | null = null;
+        if (state === 'showing') {
+            setStyle({
+                visibility: 'hidden',
+                top: top + 'px',
+                left: left + 'px',
+                transition: 'transform 0s, opacity 0s',
+                transform: `scaleX(${startScaleX}) scaleY(${startScaleY})`,
+                transformOrigin
+            });
+            timeoutId = setTimeout(() => {
+                setStyle(style => ({...style,
+                    visibility: 'visible',
+                    transition: 'transform .5s, opacity .5s',
+                    transform: 'scaleX(1) scaleY(1)'
+                }));
+                timeoutId = null;
+            }, 100);
+        } else if (state === 'hiding') {
+            setStyle(style => ({...style,
+                transform: `scaleX(${startScaleX}) scaleY(${startScaleY})`
+            }));
+        }
+        return () => {
+            if (timeoutId != null)
+                clearTimeout(timeoutId);
+        };
+    }, [state]);
 
     const addToList = () => {
         if (selectedProfile === null || dispatch === null)
@@ -47,125 +172,8 @@ const ShowItemModal: FC<ShowItemModalProps> = ({ show, showItemRect, relativeRec
         });
     };
 
-    const calculate = () => {
-        if (modalRef.current === null || hiding)
-            return;
-
-        const { height, width, top, left } = showItemRect;
-
-        let modalRect = modalRef.current.getBoundingClientRect();
-        const predictedXdistance = (modalRect.width - width) / 2;
-        const predictedYdistance = (modalRect.height - height) / 2;
-
-        let transformOrigin = 'center center';
-
-        let styleLeft = left - predictedXdistance;
-        const minLeft = relativeRect.left;
-        const maxLeft = relativeRect.right - modalRect.width;
-        if (minLeft >= styleLeft) {
-            transformOrigin = 'center left';
-            styleLeft = minLeft;
-        } else if (maxLeft <= styleLeft) {
-            transformOrigin = 'center right';
-            styleLeft = maxLeft;
-        }
-
-        const modalParentElement = modalRef.current.parentElement;
-        const modalParentTop = modalParentElement?.getBoundingClientRect().top || 0;
-
-        const style: CSSProperties = {
-            opacity: '0',
-            top: (top - modalParentTop - predictedYdistance) + 'px',
-            left: styleLeft + 'px',
-            transform: `scaleX(${width / modalRect.width}) scaleY(${height / modalRect.height})`,
-            transformOrigin
-        };
-        setModalStyle(style);
-        setShowing(true);
-        modalRef.current.focus();
-    };
-
-    useEffect(() => {
-        document.dispatchEvent(new Event('modalshow'));
-        calculate();
-
-        const handleClick = (e: MouseEvent) => {
-            const target = e.target as Node;
-            if (target != null && modalRef.current != null && !modalRef.current.contains(target))
-                hide();
-        }
-
-
-        window.addEventListener('resize', calculate);
-        document.addEventListener('modalshow', hide);
-        document.addEventListener('click', handleClick);
-        return () => {
-            window.removeEventListener('resize', calculate);
-            document.removeEventListener('modalshow', hide);
-            document.removeEventListener('click', handleClick);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (!showing || hiding)
-            return;
-
-        let setShowingFalseTimeoutId: number | null = null;
-        let timeoutId: number | null = null;
-
-        timeoutId = setTimeout(() => {
-            const style: CSSProperties = {...modalStyle,
-                opacity: '1',
-                transition: 'transform 0.3s, opacity 0.3s',
-                transform: 'none'
-            };
-            timeoutId = null;
-            setModalStyle(style);
-            setShowingFalseTimeoutId = setTimeout(() => {
-                setShowing(false);
-                setShowingFalseTimeoutId = null;
-            }, 300);
-        }, 10);
-        
-        return () => {
-            if (timeoutId != null)
-                clearTimeout(timeoutId);
-            if (setShowingFalseTimeoutId != null)
-                clearTimeout(setShowingFalseTimeoutId);
-        };
-    }, [showing]);
-
-    const hide = () => {
-        if (hiding)
-            return;
-
-        setShowing(false);
-        setHiding(true);
-    }
-
-    useEffect(() => {
-        if (!hiding || modalRef.current === null)
-            return;
-
-        const { height, width } = showItemRect;
-        let modalRect = modalRef.current.getBoundingClientRect();
-
-        const style: CSSProperties = {...modalStyle,
-            transform: `scaleX(${width / modalRect.width}) scaleY(${height / modalRect.height})`
-        };
-        setModalStyle(style);
-
-        const timeoutId = setTimeout(() => {
-            setHiding(false);
-            setModalStyle({});
-            removeModal();
-        }, 300);
-
-        return () => clearTimeout(timeoutId);
-    }, [hiding]);
-
     return (
-        <div tabIndex={-1} ref={modalRef} onMouseLeave={hide} className={'modal' + ('left' in modalStyle ? '' : ' invisible')} style={modalStyle}>
+        <div tabIndex={-1} ref={ref} onMouseLeave={onMouseLeave} className={'modal' + ('visibility' in style ? '' : ' invisible')} style={style}>
             <div className="modal-content">
                 <div className="modal-header">
                     <img src={show.picture} className="h-full w-full rounded-t-md absolute top-0 left-0" alt={show.name + ' cover'} loading="lazy" />
@@ -178,10 +186,10 @@ const ShowItemModal: FC<ShowItemModalProps> = ({ show, showItemRect, relativeRec
                                     <g><path d="M24.9573396,9.90134267 C20.0103375,6.8572215 16,9.10794841 16,14.9158024 L16,85.8210389 C16,91.6345697 20.0172931,93.8753397 24.9573396,90.8354986 L81.7630583,55.8802896 C86.7100604,52.8361684 86.7031048,47.8963928 81.7630583,44.8565517 L24.9573396,9.90134267 Z"></path></g>
                                 </svg>
                             </button>
-                            <Tooltip message={showIsInList ? "Supprimer de Ma liste" : "Ajouter à Ma liste"}>
-                                <button className="border-2 border-gray-400 hover:border-white hover:bg-white hover:bg-opacity-5 rounded-full p-2 w-10 h-10 relative" onClick={showIsInList ? removeFromList : addToList}>
+                            <Tooltip message={inProfileList ? "Supprimer de Ma liste" : "Ajouter à Ma liste"}>
+                                <button className="border-2 border-gray-400 hover:border-white hover:bg-white hover:bg-opacity-5 rounded-full p-2 w-10 h-10 relative" onClick={inProfileList ? removeFromList : addToList}>
                                 {
-                                    showIsInList ?
+                                    inProfileList ?
                                     <svg className="absolute top-1/4 left-1/4" width="18" height="18" viewBox="0 0 24 24" fill="#FFF" xmlns="http://www.w3.org/2000/svg">
                                         <path fillRule="evenodd" clipRule="evenodd" d="M21.2928 4.29285L22.7071 5.70706L8.70706 19.7071C8.51952 19.8946 8.26517 20 7.99995 20C7.73474 20 7.48038 19.8946 7.29285 19.7071L0.292847 12.7071L1.70706 11.2928L7.99995 17.5857L21.2928 4.29285Z"></path>
                                     </svg>
@@ -236,6 +244,6 @@ const ShowItemModal: FC<ShowItemModalProps> = ({ show, showItemRect, relativeRec
             </div>
         </div>
     );
-};
+}
 
 export default ShowItemModal;
