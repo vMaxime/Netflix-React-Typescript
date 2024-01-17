@@ -82,3 +82,22 @@ export const fetchListShows = (profile: ProfileInterface): Promise<ShowInterface
         resolve(shows.filter(show => profile.list.includes(show.id)));
     });
 };
+
+export const fetchVideoSrc = (): Promise<string> => {
+  return new Promise(resolve => {
+    resolve('https://vod-progressive.akamaized.net/exp=1705536587~acl=%2Fvimeo-transcode-storage-prod-us-west1-h264-2160p%2F01%2F3586%2F18%2F467931213%2F2078854744.mp4~hmac=75870ee3ebde511e9bdd0138fd0cb0e9d40d8d1071bb94e888a02d72d72e2e63/vimeo-transcode-storage-prod-us-west1-h264-2160p/01/3586/18/467931213/2078854744.mp4');
+    // const init: RequestInit = {
+    //     headers: {
+    //         'Authorization': import.meta.env.VITE_PEXELS_API_KEY
+    //     }
+    // };
+
+    // fetch('https://api.pexels.com/videos/search?query=nature+sound&orientation=landscape&per_page=2', init)
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         console.log(data.videos)
+    //         resolve(data.videos[1].video_files[0].link)
+    //     })
+    //     .catch(() => resolve('https://assets.mixkit.co/videos/preview/mixkit-curvy-road-on-a-tree-covered-hill-41537-large.mp4'));
+  });
+};

@@ -1,5 +1,5 @@
 import { FC, createRef, useContext, useEffect, useState } from 'react';
-import { ShowType, SectionInterface, fetchSections } from '../../fakeApi';
+import { ShowType, SectionInterface, fetchSections, fetchVideoSrc } from '../../fakeApi';
 import { UserContext, findProfile } from '../../user';
 import Slider from '../../components/Slider';
 import SectionSkeleton from '../../components/SectionSkeleton';
@@ -20,16 +20,18 @@ const ByType: FC<ByTypeInterface> = ({ type }) => {
     const widthRef = createRef<HTMLDivElement>();
 
     const [sections, setSections] = useState<SectionInterface[] | null>(null);
+    const [videoSrc, setVideoSrc] = useState<string | null>(null);
 
     useEffect(() => {
         if (selectedProfile === null)   
             return;
 
         fetchSections(selectedProfile, type)
-            .then(setSections)
+            .then(setSections);
+        fetchVideoSrc().then(setVideoSrc);
     }, []);
 
-    if (sections === null)
+    if (sections === null || videoSrc === null)
         return <div className="px-4p"><SectionSkeleton /></div>;
 
     const sectionsElements = sections.map((section, index) => !section.shows.length ? null :
@@ -49,7 +51,7 @@ const ByType: FC<ByTypeInterface> = ({ type }) => {
     
     return (<>
         <div className="w-full">
-            <Video>
+            <Video src={videoSrc} volume={1}>
                 <div className="shows w-full">
                     { sectionsElements[0] }
                 </div>
