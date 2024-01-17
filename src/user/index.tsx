@@ -70,13 +70,15 @@ interface UserInterface {
   managingProfiles: boolean
 }
 
-const nullUser = {
+const nullUser: UserInterface = {
   token: null,
   email: null,
-  profiles: []
+  profiles: defaultProfiles,
+  selectedProfile: null,
+  managingProfiles: false
 };
 
-const initialState: UserInterface = JSON.parse(localStorage.getItem("user") || JSON.stringify(nullUser));
+export const initialState: UserInterface = JSON.parse(localStorage.getItem("user") || JSON.stringify(nullUser));
 initialState.managingProfiles = false;
 if (initialState.token != null) {
   const selectedProfileId = JSON.parse(sessionStorage.getItem('selected_profile') || 'null');
@@ -84,7 +86,7 @@ if (initialState.token != null) {
 }
 
 type UserAction =
-  | { type: 'LOGIN', payload: UserInterface }
+  | { type: 'LOGIN', payload: { token: string, email: string } }
   | { type: 'LOGOUT' }
   | { type: 'TOGGLE_MANAGING' }
   | { type: 'ADD_PROFILE', payload: ProfileInterface }
@@ -101,11 +103,9 @@ const reducer = (state: UserInterface, action: UserAction): UserInterface => {
     switch (action.type) {
       case "LOGIN": {
         const user = {
-          ...state,
-          ...action.payload,
-          profiles: defaultProfiles,
-          selectedProfile: null
-        };
+          ...nullUser,
+          ...action.payload
+        }
         localStorage.setItem('user', JSON.stringify(user));
         return user;
       }

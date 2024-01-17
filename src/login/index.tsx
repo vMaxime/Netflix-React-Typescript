@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import { UserContext, UserDispatchContext } from "../user";
+import { useNavigate } from 'react-router-dom';
+import { UserContext, UserDispatchContext } from '../user';
 import './login.css';
 
 function Login() {
@@ -49,10 +49,7 @@ function Login() {
                     type: 'LOGIN',
                     payload: {
                         token: data.token,
-                        email: 'johndoe@gmail.com',
-                        profiles: [],
-                        selectedProfile: null,
-                        managingProfiles: false
+                        email: 'johndoe@gmail.com'
                     }
                 });
                 setLoading(false);
