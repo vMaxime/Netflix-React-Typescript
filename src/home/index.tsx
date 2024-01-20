@@ -69,7 +69,7 @@ const Home: FC<HomeProps> = ({ searching }) => {
 
     return (<>
         <HomeHeader profile={selectedProfile} />
-        <main style={{ backgroundColor: '#141414' }}>
+        <main className="flex flex-col" style={{ backgroundColor: '#141414' }}>
             <Outlet />
         </main>
         <footer className="text-dark flex flex-col gap-5 pb-6 pt-32 px-4" style={{ backgroundColor: '#141414' }}>

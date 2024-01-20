@@ -1,3 +1,68 @@
 .video {
-    @apply h-fit w-full relative;
+    @apply w-full relative;
+}
+
+.video video {
+    @apply absolute top-0 left-0 w-full;
+}
+
+.video-content-wrapper {
+    position: relative;
+    padding-bottom: 40%;
+    margin-bottom: 20px;
+}
+
+.video-content {
+    height: 56.25vw;
+    @apply absolute top-0 left-0 mt-10 md:mt-0 w-full;
+}
+
+.video-body {
+    position: absolute;
+    bottom: 35%;
+    left: 4%;
+    width: 36%;
+    display: flex;
+    flex-direction: column;
+}
+
+.video button {
+    @apply h-fit text-xs md:text-base xl:text-xl whitespace-nowrap;
+}
+
+.video .synopsis {
+    font-size: 1.2vw;
+    text-shadow: 2px 2px 4px rgba(0,0,0,.45);
+    line-height: normal;
+    @apply font-normal mt-4;
+}
+
+.video .maturity-rating {
+    background-color: rgba(51,51,51,.6);
+    border-left: 3px #dcdcdc solid;
+    padding: .5vw 3.5vw .5vw .8vw;
+    font-size: 1.1vw;
+    @apply text-white font-medium;
+}
+
+.video .video-play-or-resume-button,
+.video .more-infos-button {
+    border-radius: 4px;
+    @apply flex items-center gap-1 sm:gap-2 md:gap-3 py-1 sm:py-2 px-3 sm:px-4 md:px-6 xl:px-8;
+}
+
+.video .video-play-or-resume-button {
+    @apply bg-white hover:bg-gray-300;
+}
+
+.video .more-infos-button {
+    background-color: rgba(109, 109, 110, 0.7);
+}
+
+.video .more-infos-button:hover {
+    background-color: rgba(109, 109, 110, 0.4);
+}
+
+.video-action-button {
+    @apply rounded-full border-white border-opacity-70 border p-3 hover:bg-white hover:bg-opacity-5 focus:outline-2 focus:outline focus:outline-offset-1;
 }
