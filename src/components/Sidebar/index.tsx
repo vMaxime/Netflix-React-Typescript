@@ -22,7 +22,8 @@ const Sidebar: FC<SidebarProps> = ({ icon, children }) => {
     };
 
     const hide = () => {
-        setSidebarState('hiding');
+        if (sidebarState != null)
+            setSidebarState('hiding');
     };
 
     useEffect(() => {
