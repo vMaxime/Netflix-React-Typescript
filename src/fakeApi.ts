@@ -66,6 +66,18 @@ export const fetchSections = (profile: ProfileInterface, type: ShowType): Promis
             {
                 'name': 'Nouveautés',
                 'shows': shows
+            },
+            {
+                'name': 'Ajouts des 12 derniers mois',
+                'shows': shows
+            },
+            {
+                'name': 'Films psychologique',
+                'shows': shows
+            },
+            {
+                'name': 'Appréciés sur Netflix',
+                'shows': shows
             }
         ];
 
