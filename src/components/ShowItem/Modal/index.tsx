@@ -33,7 +33,7 @@ const ShowItemModal: FC<ShowItemModalProps> = ({ children, show }) => {
         setStateTimeoutId(setTimeout(() => {
             setModalState('visible');
             setStateTimeoutId(null);
-        }, 900)); // show timeout + animation duration
+        }, 700)); // show timeout + animation duration
     };
 
     const handleMouseLeave = () => {
@@ -51,7 +51,7 @@ const ShowItemModal: FC<ShowItemModalProps> = ({ children, show }) => {
         setStateTimeoutId(setTimeout(() => {
             setModalState(null);
             setStateTimeoutId(null);
-        }, 500)); // animation duration
+        }, 300)); // animation duration
     };
 
     useEffect(() => {
@@ -62,7 +62,11 @@ const ShowItemModal: FC<ShowItemModalProps> = ({ children, show }) => {
 
     return (<>
         {
-            cloneElement(children as ReactElement, { onMouseEnter: handleMouseOver, onMouseLeave: handleMouseLeave, ref })
+            cloneElement(children as ReactElement, {
+                onMouseOver: handleMouseOver,
+                onMouseLeave: handleMouseLeave,
+                ref
+            })
         }
         {
             modalState != null && relativeElement != null ? 
@@ -92,6 +96,21 @@ const ShowModal: FC<ShowModalProps> = ({ show, onMouseLeave, state, relativeElem
     const ref = createRef<HTMLDivElement>();
 
     const [style, setStyle] = useState<CSSProperties>({});
+
+    useEffect(() => {
+        if (ref.current === null)
+            return;
+
+        const element = ref.current as HTMLElement;
+
+        const handleClick = (e: MouseEvent) => {
+            if (!element.contains(e.target as Node))
+                onMouseLeave();
+        }
+
+        window.addEventListener('click', handleClick);
+        return () => window.removeEventListener('click', handleClick);
+    }, []);
 
     useEffect(() => {
         if (ref.current === null)
@@ -134,7 +153,7 @@ const ShowModal: FC<ShowModalProps> = ({ show, onMouseLeave, state, relativeElem
             timeoutId = setTimeout(() => {
                 setStyle(style => ({...style,
                     visibility: 'visible',
-                    transition: 'transform .5s, opacity .5s',
+                    transition: 'transform .3s, opacity .3s',
                     transform: 'scaleX(1) scaleY(1)'
                 }));
                 timeoutId = null;
