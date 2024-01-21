@@ -1,10 +1,10 @@
 .sub-header {
     padding: 0 4%;
     background-color: #141414;
-    @apply mt-20 fixed w-full z-50;
+    @apply mt-20 fixed w-full z-40;
 }
 
-#root:has(.sub-header) > header {
+header:has(.sub-header) > header {
     background-color: #141414 !important;
     transition: none !important;
 }

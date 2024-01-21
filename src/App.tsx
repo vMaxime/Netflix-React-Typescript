@@ -5,6 +5,7 @@ import Login from './login';
 import { UserProvider, UserContext } from './user';
 import ByType from './home/ByType';
 import MyList from './home/MyList';
+import News from './home/News';
 
 const ProtectedRoute: FC<PropsWithChildren> = ({ children }) => {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ function App() {
           <Route path="films" element={ <ByType key="film" type="film" /> } />
           <Route path="series" element={ <ByType key="serie" type="serie" /> } />
           <Route path="my-list" element={ <MyList /> } />
+          <Route path="news" element={ <News /> } />
         </Route>
 
         <Route path="/search" element={ <ProtectedRoute><Home searching={true} /></ProtectedRoute> } />

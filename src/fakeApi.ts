@@ -83,6 +83,34 @@ export const fetchListShows = (profile: ProfileInterface): Promise<ShowInterface
     });
 };
 
+export const fetchNews = (): Promise<SectionInterface[]> => {
+    const _shows = data as [];
+    const shows = _shows as ShowInterface[];
+    return new Promise(async (resolve) => {
+        const sections: SectionInterface[] = [
+            {
+                'name': 'Disponible cette semaine',
+                'shows': shows
+            },
+            {
+                'name': 'Nouveautés sur Netflix',
+                'shows': shows
+            },
+            {
+                'name': 'Valent bien l\'attente',
+                'shows': shows
+            },
+            {
+                'name': 'Top 10 des films aujourd\'hui',
+                'shows': shows
+            }
+        ];
+
+        await wait(randomTimeout());
+        resolve(sections);
+    });
+}
+
 export const fetchVideoSrc = (): Promise<string> => {
   return new Promise(resolve => {
     resolve('https://vod-progressive.akamaized.net/exp=1705536587~acl=%2Fvimeo-transcode-storage-prod-us-west1-h264-2160p%2F01%2F3586%2F18%2F467931213%2F2078854744.mp4~hmac=75870ee3ebde511e9bdd0138fd0cb0e9d40d8d1071bb94e888a02d72d72e2e63/vimeo-transcode-storage-prod-us-west1-h264-2160p/01/3586/18/467931213/2078854744.mp4');
