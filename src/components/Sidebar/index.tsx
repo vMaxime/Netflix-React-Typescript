@@ -9,7 +9,7 @@ interface SidebarProps {
 
 const Sidebar: FC<SidebarProps> = ({ icon, children }) => {
 
-    const ref = createRef();
+    const ref = createRef<HTMLButtonElement>();
     
     const [sidebarState, setSidebarState] = useState<SidebarState | null>(null);
     const [refCurrentElement, setRefCurrentElement] = useState<HTMLElement | null>(null);
@@ -22,8 +22,12 @@ const Sidebar: FC<SidebarProps> = ({ icon, children }) => {
     };
 
     const hide = () => {
-        if (sidebarState != null)
-            setSidebarState('hiding');
+        setSidebarState(prevState => {
+            if (prevState === null)
+                return null;
+
+            return 'hiding';
+        });
     };
 
     useEffect(() => {
@@ -56,7 +60,7 @@ const Sidebar: FC<SidebarProps> = ({ icon, children }) => {
     }, [sidebarState]);
 
     useEffect(() => {
-        if (ref.current === null)
+        if (ref.current === null )
             return;
 
         const element = ref.current as HTMLElement;
@@ -69,13 +73,18 @@ const Sidebar: FC<SidebarProps> = ({ icon, children }) => {
 
         window.addEventListener('click', handleClick);
         return () => {
+            console.log('bye')
             setRefCurrentElement(null);
             window.removeEventListener('click', handleClick);
         };
     }, []);
 
     return (<>
-    { cloneElement(icon, { onClick: toggle, ref }) }
+    {
+        <button ref={ref} onClick={toggle}>
+            { icon }
+        </button>
+    }
     { refCurrentElement != null && sidebarState != null ?
         createPortal(
             <div tabIndex={0} className={'sidebar' + (sidebarState != 'idle' ? ' ' + sidebarState : '')}>

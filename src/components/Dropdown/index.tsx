@@ -61,6 +61,9 @@ const Dropdown: FC<DropdownProps> = ({ icon, children, borderTop }) => {
     };
 
     const handleMouseClickOutside = () => {
+        console.log('click outside')
+        if (portal === null)
+            return;
         setHideTimeoutId(prevId => {
             if (prevId != null)
                 clearTimeout(prevId);
