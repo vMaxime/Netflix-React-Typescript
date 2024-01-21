@@ -54,11 +54,10 @@ const SearchBar: FC<SearchBarProps> = ({ icon, className, onCancel }) => {
     const handleClick = () => setExpanded(true);
 
     return (
-    <div className={'relative' + (className ? ' ' + className : '')}>
+    <div className={'relative flex' + (className ? ' ' + className : '')}>
+        { cloneElement(icon, { onClick: handleClick }) }
         {
-            !expanded ?
-            cloneElement(icon, { onClick: handleClick })
-            :
+            !expanded ? null :
             <>
             <div ref={wrapperRef} className="flex items-center gap-2 absolute right-0 -top-1/4 z-10 border border-white bg-black w-0 overflow-x-hidden" style={{ transition: 'width 1s', maxWidth: '280px' }}>
                 <svg width="18" height="18" className="ml-2" viewBox="0 0 24 24" fill="#FFF" xmlns="http://www.w3.org/2000/svg">
