@@ -29,10 +29,16 @@ const Dropdown: FC<DropdownProps> = ({ icon, children, borderTop }) => {
                 return prevPortal;
 
             return createPortal(
-                <DropdownContent relativeElement={relativeElement} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave} borderTop={borderTop}>
+                <DropdownContent
+                    relativeElement={relativeElement}
+                    onMouseOver={handleMouseOver}
+                    onMouseLeave={handleMouseLeave}
+                    onMouseClickOutside={handleMouseClickOutside}
+                    borderTop={borderTop}
+                >
                     {children}
                 </DropdownContent>,
-                document.getElementById('root')!
+                relativeElement
             );
         });
     };
@@ -54,6 +60,15 @@ const Dropdown: FC<DropdownProps> = ({ icon, children, borderTop }) => {
         }, 300));
     };
 
+    const handleMouseClickOutside = () => {
+        setHideTimeoutId(prevId => {
+            if (prevId != null)
+                clearTimeout(prevId);
+            return null;
+        });
+        hide();
+    };
+
     useEffect(() => {
         if (ref.current === null)
             return;
@@ -70,8 +85,12 @@ const Dropdown: FC<DropdownProps> = ({ icon, children, borderTop }) => {
         return () => document.removeEventListener('dropdownshow', hide);
     }, [portal]);
 
+    let iconClassName = icon.props.className || '';
+    if (!iconClassName.includes('relative'))
+        iconClassName += ' relative';
+
     return (<>
-        { cloneElement(icon, { onMouseOver: handleMouseOver, onMouseLeave: handleMouseLeave, onClick: show, ref }) }
+        { cloneElement(icon, { className: iconClassName, onMouseOver: handleMouseOver, onMouseLeave: handleMouseLeave, onClick: show, ref }) }
         { portal }
     </>);
 };
@@ -81,33 +100,39 @@ interface DropdownContentProps {
     relativeElement: HTMLElement,
     onMouseOver(): void,
     onMouseLeave(): void,
+    onMouseClickOutside(): void,
     borderTop?: boolean
 }
 
-const DropdownContent: FC<DropdownContentProps> = ({ children, relativeElement, onMouseOver, onMouseLeave, borderTop }) => {
+const DropdownContent: FC<DropdownContentProps> = ({ children, relativeElement, onMouseOver, onMouseLeave, onMouseClickOutside, borderTop }) => {
     const ref = createRef<HTMLDivElement>();
-    const [style, setStyle] = useState<CSSProperties>({borderTop: borderTop ? '1px solid' : ''});
+    const [style, setStyle] = useState<CSSProperties>({borderTop: borderTop ? '1px solid' : '', visibility: 'hidden'});
 
     useEffect(() => {
         if (ref.current === null)
             return;
 
-        const { width } = ref.current.getBoundingClientRect();
+        const element = ref.current as HTMLElement;
 
         const relativeRect = relativeElement.getBoundingClientRect();
-        const [relativeTop, relativeLeft] = getAbsolutePosition(relativeElement);
         const relativeHeight = relativeRect.height;
-        const relativeWidth = relativeRect.width;
-
-        const top = relativeTop + relativeHeight;
-        const left = relativeLeft - width + relativeWidth;
 
         setStyle({...style,
-            top: `calc(${top}px + 1rem)`,
-            left: left + 'px'
+            top: `calc(${relativeHeight}px + 1rem)`,
+            right: '0px',
+            visibility: 'visible'
         });
-        ref.current.focus();
+        element.focus();
+
+        const handleClick = (e: MouseEvent) => {
+            if (!element.contains(e.target as Node))
+                onMouseClickOutside();
+        }
+
+        window.addEventListener('click', handleClick);
+        return () => window.removeEventListener('click', handleClick);
     }, []);
+    
 
     return (
         <div tabIndex={-1} autoFocus className="dropdown" ref={ref} style={style} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
