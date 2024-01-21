@@ -28,9 +28,9 @@ const MyList: FC<MyListProps> = ({ }) => {
 
     return (<>
         <div className="sub-header">
-            <h1 className="text-xl pb-5">Ma Liste</h1>
+            <h1 className="text-2xl md:text-4xl font-medium pb-5">Ma liste</h1>
         </div>
-        <div className="flex w-full h-full shows mt-32">
+        <div className="flex w-full h-full shows mt-52">
             <section className="w-full">
                 <Slider wrap={true} items={
                         shows.map(show =>
