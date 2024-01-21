@@ -1,23 +1,19 @@
-import { FC, createRef, useEffect, useState, ChangeEvent } from 'react';
+import { FC, createRef, useEffect, useState, ChangeEvent, cloneElement, ReactElement } from 'react';
 import { useNavigate } from "react-router-dom";
 
 interface SearchBarProps {
+    icon: ReactElement,
     className?: string,
     onCancel: Function
 }
 
-const SearchBar: FC<SearchBarProps> = ({ className, onCancel }) => {
+const SearchBar: FC<SearchBarProps> = ({ icon, className, onCancel }) => {
 
     const navigate = useNavigate();
     const inputRef = createRef<HTMLInputElement>();
     const wrapperRef = createRef<HTMLDivElement>();
     const [showQuit, setShowQuit] = useState<boolean>(false);
     const [expanded, setExpanded] = useState<boolean>(false);
-
-    const style = {
-        height: '24px',
-        width: '24px'
-    };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         navigate('/search?q=' + e.target.value);
@@ -55,15 +51,13 @@ const SearchBar: FC<SearchBarProps> = ({ className, onCancel }) => {
             wrapperRef.current.classList.add('expand');
     }, [expanded]);
 
+    const handleClick = () => setExpanded(true);
+
     return (
-    <div className={'relative' + (className ? ' ' + className : '')} style={style}>
+    <div className={'relative' + (className ? ' ' + className : '')}>
         {
             !expanded ?
-            <button onClick={() => setExpanded(true)}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="#FFF" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10ZM15.6177 17.0319C14.078 18.2635 12.125 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10C19 12.125 18.2635 14.078 17.0319 15.6177L22.7071 21.2929L21.2929 22.7071L15.6177 17.0319Z"></path>
-                </svg>
-            </button>
+            cloneElement(icon, { onClick: handleClick })
             :
             <>
             <div ref={wrapperRef} className="flex items-center gap-2 absolute right-0 -top-1/4 z-10 border border-white bg-black w-0 overflow-x-hidden" style={{ transition: 'width 1s', maxWidth: '280px' }}>
