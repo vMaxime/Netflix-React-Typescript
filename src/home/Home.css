@@ -8,3 +8,7 @@
     background-color: #141414 !important;
     transition: none !important;
 }
+
+header nav .active {
+    @apply text-white font-semibold;
+}
