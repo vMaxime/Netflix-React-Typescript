@@ -73,7 +73,6 @@ const Sidebar: FC<SidebarProps> = ({ icon, children }) => {
 
         window.addEventListener('click', handleClick);
         return () => {
-            console.log('bye')
             setRefCurrentElement(null);
             window.removeEventListener('click', handleClick);
         };
