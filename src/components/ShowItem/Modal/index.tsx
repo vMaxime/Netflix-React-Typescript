@@ -28,6 +28,7 @@ const ShowItemModal: FC<ShowItemModalProps> = ({ children, show }) => {
         setShowTimeoutId(setTimeout(() => {
             setShowTimeoutId(null);
             setModalState('showing');
+            document.dispatchEvent(new Event('modalshow'));
         }, 400)); // show modal delay
 
         setStateTimeoutId(setTimeout(() => {
@@ -109,7 +110,13 @@ const ShowModal: FC<ShowModalProps> = ({ show, onMouseLeave, state, relativeElem
         }
 
         window.addEventListener('click', handleClick);
-        return () => window.removeEventListener('click', handleClick);
+        document.addEventListener('mouseleave', handleClick);
+        document.addEventListener('modalshow', onMouseLeave);
+        return () => {
+            window.removeEventListener('click', handleClick);
+            document.removeEventListener('mouseleave', handleClick);
+            document.removeEventListener('modalshow', onMouseLeave);
+        };
     }, []);
 
     useEffect(() => {
@@ -121,7 +128,9 @@ const ShowModal: FC<ShowModalProps> = ({ show, onMouseLeave, state, relativeElem
         const startScaleX = relativeRect.width / width;
         const startScaleY = relativeRect.height / height;
 
-        const [relativeTop, relativeLeft] = getAbsolutePosition(relativeElement);
+        const [relativeTop,] = getAbsolutePosition(relativeElement);
+        const relativeLeft = relativeRect.left;
+
         let top = relativeTop + ((relativeRect.height - height) / 2);
         let left = relativeLeft + ((relativeRect.width - width) / 2);
         let transformOrigin = 'center center';
