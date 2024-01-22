@@ -12,3 +12,8 @@ header:has(.sub-header) > header {
 header nav .active {
     @apply text-white font-semibold;
 }
+
+.show-section {
+    margin: 2vw 0;
+    @apply w-full z-10;
+}

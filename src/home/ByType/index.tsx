@@ -42,13 +42,16 @@ const ByType: FC<ByTypeInterface> = ({ type }) => {
                 <VideoPlayOrResumeButton className="mr-1 sm:mr-2 md:mr-3 mb-4" />
                 <VideoMoreInfosButton />
             </VideoBody>
+            <div className="relative w-full h-full">
+                <div className="video-gradient"></div>
+            </div>
         </Video>
         <div ref={widthRef} className="h-0 mx-4p"></div>
-        <div ref={wrapperRef} className="flex flex-col gap-5 md:gap-10 shows">
+        <div ref={wrapperRef} className="flex flex-col shows">
             {
                 sections.map((section, index) => !section.shows.length ? null :
-                    <section key={section.name} className="w-full">
-                        <p className="mb-2 lg:mb-3 text-xs sm:text-sm md:text-xl xl:text-2xl xl:font-medium px-4p">{section.name}</p>
+                    <section key={section.name} className="show-section">
+                        <p className="mb-2 lg:mb-3 text-xs sm:text-sm md:text-xl xl:text-2xl font-medium px-4p">{section.name}</p>
                         <Slider
                             key={section.name + index}
                             items={
