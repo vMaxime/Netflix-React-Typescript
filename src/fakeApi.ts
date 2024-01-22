@@ -72,7 +72,7 @@ export const fetchSections = (profile: ProfileInterface, type: ShowType): Promis
                 'shows': shows
             },
             {
-                'name': 'Films psychologique',
+                'name': (type === 'film' ? 'Films salués' : 'Séries saluées') + ' psychologique',
                 'shows': shows
             },
             {
