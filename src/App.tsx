@@ -20,7 +20,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ children, checkProfile }) => 
   const shouldSelectProfile = user != null && user.selectedProfile === null && checkProfile === true;
 
   useEffect(() => {
-    if (user?.token === null) {
+    if (!user?.token) {
       navigate('/login');
     } else if (user != null && user.selectedProfile === null && checkProfile === true) {
       navigate('/profiles');
