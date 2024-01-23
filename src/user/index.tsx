@@ -46,7 +46,7 @@ const defaultProfiles: ProfileInterface[] = [
     read_next_episode: true,
     read_preview: true,
     notifications: [],
-    list: [0, 3, 9],
+    list: [0, 3, 9, 11, 13, 15, 17],
     evaluations: []
   },
   {
@@ -57,7 +57,7 @@ const defaultProfiles: ProfileInterface[] = [
     read_next_episode: true,
     read_preview: true,
     notifications: [],
-    list: [1, 4, 6],
+    list: [1, 4, 7, 10, 12, 14, 18],
     evaluations: []
   }
 ];
