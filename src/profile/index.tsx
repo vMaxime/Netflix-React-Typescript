@@ -38,7 +38,9 @@ function Profile() {
         alias: null,
         read_next_episode: true,
         read_preview: true,
-        notifications: []
+        notifications: [],
+        evaluations: [],
+        list: []
     }
 
     const gradientStyle = {
