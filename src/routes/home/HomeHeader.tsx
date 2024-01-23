@@ -1,9 +1,9 @@
 import { FC, useContext, useEffect, useState } from 'react';
-import { ProfileInterface, UserContext, UserDispatchContext, UserInterface, findProfile } from "../user";
-import SearchBar from "../components/SearchBar";
-import Dropdown from "../components/Dropdown";
-import Sidebar from "../components/Sidebar";
-import { useNavigate, NavLink } from "react-router-dom";
+import { ProfileInterface, UserContext, UserDispatchContext, UserInterface, findProfile } from '../../user';
+import SearchBar from '../../components/SearchBar';
+import Dropdown from '../../components/Dropdown';
+import Sidebar from '../../components/Sidebar';
+import { useNavigate, NavLink } from 'react-router-dom';
 
 interface HomeHeaderProps {
     profile: ProfileInterface

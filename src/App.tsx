@@ -1,12 +1,12 @@
 import { FC, ReactNode, useContext, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import Home from './home';
-import Login from './login';
+import Home from './routes/home';
+import Login from './routes/login';
 import { UserProvider, UserContext } from './user';
-import ByType from './home/ByType';
-import MyList from './home/MyList';
-import News from './home/News';
-import Profile from './profile';
+import ByType from './routes/home/ByType';
+import MyList from './routes/home/MyList';
+import News from './routes/home/News';
+import Profile from './routes/profile';
 import Logout from './routes/logout';
 
 interface ProtectedRouteProps {

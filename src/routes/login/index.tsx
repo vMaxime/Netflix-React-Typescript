@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext, UserDispatchContext } from '../user';
+import { UserContext, UserDispatchContext } from '../../user';
 import './login.css';
 
 function Login() {

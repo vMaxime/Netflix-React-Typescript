@@ -1,6 +1,6 @@
 import { FC, useContext, useEffect, useState } from 'react';
 import Profile from '../profile';
-import { UserContext, findProfile } from '../user';
+import { UserContext, findProfile } from '../../user';
 import HomeHeader from './HomeHeader';
 import { Outlet, useNavigate } from 'react-router-dom';
 import './Home.css';

@@ -1,9 +1,9 @@
 import { FC, useContext, useEffect, useState } from 'react';
-import { ShowInterface, fetchListShows } from '../../fakeApi';
-import { UserContext, findProfile } from '../../user';
-import ShowItem from '../../components/ShowItem';
-import SectionSkeleton from '../../components/SectionSkeleton';
-import Slider from '../../components/Slider';
+import { ShowInterface, fetchListShows } from '../../../fakeApi';
+import { UserContext, findProfile } from '../../../user';
+import ShowItem from '../../../components/ShowItem';
+import SectionSkeleton from '../../../components/SectionSkeleton';
+import Slider from '../../../components/Slider';
 
 interface MyListProps {
 

@@ -1,5 +1,5 @@
 import  { FC } from 'react';
-import { ProfileInterface } from "../user";
+import { ProfileInterface } from '../../user';
 
 interface ConfirmNewPictureProps {
     profile: ProfileInterface,

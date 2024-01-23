@@ -1,11 +1,11 @@
 import { FC, createRef, useContext, useEffect, useState } from 'react';
-import { ShowType, SectionInterface, fetchSections, fetchVideoSrc } from '../../fakeApi';
-import { UserContext, findProfile } from '../../user';
-import Slider from '../../components/Slider';
-import SectionSkeleton from '../../components/SectionSkeleton';
-import ShowItem from '../../components/ShowItem';
+import { ShowType, SectionInterface, fetchSections, fetchVideoSrc } from '../../../fakeApi';
+import { UserContext, findProfile } from '../../../user';
+import Slider from '../../../components/Slider';
+import SectionSkeleton from '../../../components/SectionSkeleton';
+import ShowItem from '../../../components/ShowItem';
 import './ByType.css';
-import { Video, VideoBody, VideoToggleButton, VideoMoreInfosButton, VideoPlayOrResumeButton } from '../../components/Video';
+import { Video, VideoBody, VideoMoreInfosButton, VideoPlayOrResumeButton } from '../../../components/Video';
 
 interface ByTypeInterface {
     type: ShowType

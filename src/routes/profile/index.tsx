@@ -1,6 +1,6 @@
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import './profile.css';
-import { ProfileInterface, UserContext, UserDispatchContext, generateId } from '../user';
+import { ProfileInterface, UserContext, UserDispatchContext, generateId } from '../../user';
 import EditProfile from './EditProfile';
 import EditProfilePicture from './EditProfilePicture';
 import { useNavigate } from 'react-router-dom';

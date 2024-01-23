@@ -1,6 +1,6 @@
 import { FC, ChangeEvent, useState } from 'react';
-import { ProfileInterface } from '../user';
-import Checkbox from '../components/Checkbox';
+import { ProfileInterface } from '../../user';
+import Checkbox from '../../components/Checkbox';
 
 interface EditProfileProps {
     profile: ProfileInterface,

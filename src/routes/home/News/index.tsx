@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from 'react';
-import { SectionInterface, fetchNews } from '../../fakeApi';
-import ShowItem from '../../components/ShowItem';
-import SectionSkeleton from '../../components/SectionSkeleton';
-import Slider from '../../components/Slider';
+import { SectionInterface, fetchNews } from '../../../fakeApi';
+import ShowItem from '../../../components/ShowItem';
+import SectionSkeleton from '../../../components/SectionSkeleton';
+import Slider from '../../../components/Slider';
 
 interface NewsProps {
 
