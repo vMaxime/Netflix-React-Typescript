@@ -62,7 +62,7 @@ const defaultProfiles: ProfileInterface[] = [
   }
 ];
 
-interface UserInterface {
+export interface UserInterface {
   token: string | null,
   email: string | null,
   profiles: ProfileInterface[],
