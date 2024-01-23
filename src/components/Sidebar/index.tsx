@@ -82,9 +82,9 @@ const Sidebar: FC<SidebarProps> = ({ icon, children }) => {
     { cloneElement(icon, { onClick: toggle, ref }) }
     { refCurrentElement != null && sidebarState != null ?
         createPortal(
-            <div tabIndex={0} className={'sidebar' + (sidebarState != 'idle' ? ' ' + sidebarState : '')}>
+            <aside tabIndex={0} className={'sidebar' + (sidebarState != 'idle' ? ' ' + sidebarState : '')}>
                 { children }
-            </div>,
+            </aside>,
             refCurrentElement
         )
         : null

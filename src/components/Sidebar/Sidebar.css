@@ -26,7 +26,12 @@ header:has(.sidebar) {
 .sidebar nav li {
     border-left: 3px solid;
     color: #808080;
-    @apply font-bold py-1 px-5 border-l-black;
+    @apply font-bold px-5 border-l-black text-start;
+}
+
+.sidebar-divider {
+    border-color: #333;
+    @apply border-t my-1;
 }
 
 .sidebar nav li:has(.active) {
