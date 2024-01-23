@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect, useState } from 'react';
-import { ProfileInterface, UserContext, UserDispatchContext } from "../user";
+import { ProfileInterface, UserContext, UserDispatchContext, UserInterface, findProfile } from "../user";
 import SearchBar from "../components/SearchBar";
 import Dropdown from "../components/Dropdown";
 import Sidebar from "../components/Sidebar";
@@ -11,13 +11,14 @@ interface HomeHeaderProps {
 
 const HomeHeader: FC<HomeHeaderProps> = ({ profile }) => {
 
-    const user = useContext(UserContext);
-    const profiles = user?.profiles || [];
-    const selectedProfile: string | null = user?.selectedProfile || null;
+    // user and selectedProfile can not be null/undefined thanks to ProtectedRoute (checkProfile=true)
+    const user: UserInterface = useContext(UserContext)!;
+    const profiles = user.profiles;
+    const selectedProfile: ProfileInterface = findProfile(user, user.selectedProfile!)!;
+    
     const dispatch = useContext(UserDispatchContext);
     const navigate = useNavigate();
 
-    const genre = null;
     const [backgroundColor, setBackgroundColor] = useState<string>('transparent');
 
     const handleScroll = () => {
@@ -25,13 +26,6 @@ const HomeHeader: FC<HomeHeaderProps> = ({ profile }) => {
             setBackgroundColor('#141414');
         else if (window.scrollY === 0)
             setBackgroundColor('transparent');
-    };
-
-    const logout = () => {
-        if (dispatch != null) {
-            dispatch({ type: 'LOGOUT' });
-            navigate('/login');
-        }
     };
 
     const selectProfile = (profile: ProfileInterface | null) => {
@@ -79,17 +73,36 @@ const HomeHeader: FC<HomeHeaderProps> = ({ profile }) => {
                         </button>
                     }
                 >
-                    <nav className="py-2 bg-black w-64 h-screen">
-                        <ul className="flex flex-col text-md">
-                            {
-                                navUrls.map(([path, label]) => 
-                                    <li key={path} className="text-start">
-                                        <NavLink to={ path } end={path === ''}>{ label }</NavLink>
-                                    </li>
-                                )
-                            }
-                        </ul>
-                    </nav>
+                    <div className="py-2 bg-black w-64 h-screen">
+                        <nav className="mb-3">
+                            <ul className="flex flex-col text-md leading-none">
+                                <li className="mb-3">
+                                    <NavLink to="/profiles" className="flex">
+                                        <img src={selectedProfile.picture} className="w-8 h-8" alt={ selectedProfile.name + ' profile picture' } />
+                                        <div className="flex flex-col ml-2">
+                                            <span className="">{ selectedProfile.name }</span>
+                                            <span className="text-xs font-normal">Changer de profil</span>
+                                        </div>
+                                    </NavLink>
+                                </li>
+                                <li className="mb-3">Compte</li>
+                                <li className="mb-3">Centre d'aide</li>
+                                <li><NavLink to="/logout">Se déconnecter</NavLink></li>
+                            </ul>    
+                        </nav>
+                        <div className="sidebar-divider"></div>
+                        <nav className="mt-1">
+                            <ul className="flex flex-col text-md leading-loose">
+                                {
+                                    navUrls.map(([path, label]) => 
+                                        <li key={path}>
+                                            <NavLink to={ path } end={path === ''}>{ label }</NavLink>
+                                        </li>
+                                    )
+                                }
+                            </ul>
+                        </nav>
+                    </div>
                 </Sidebar>
                 <a href="/" className="flex items-center">
                     <svg className="fill-red-600 w-14 md:w-24" width="95" viewBox="0 0 111 30" aria-hidden="true" focusable="false">
@@ -158,7 +171,7 @@ const HomeHeader: FC<HomeHeaderProps> = ({ profile }) => {
                     >
                         <div className="account-dropdown-content">
                         {
-                            profiles.filter(profile => selectedProfile != null && profile.id != selectedProfile).map(profile =>
+                            profiles.filter(profile => profile.id != selectedProfile.id).map(profile =>
                                 <button key={profile.id} className="w-full flex items-center gap-3 py-2 px-3 hover:underline" onClick={() => selectProfile(profile)}>
                                     <div className="flex w-9 h-9">
                                         <img src={ profile.picture } className="w-8 h-8 rounded-md" alt="Profile picture" />
@@ -201,8 +214,10 @@ const HomeHeader: FC<HomeHeaderProps> = ({ profile }) => {
                                 <span className="text-sm">Centre d'aide</span>
                             </button>
                             <div className="w-full divider mt-3 mb-2"></div>
-                            <button className="text-sm text-center py-2 w-full hover:underline" onClick={logout}>
-                                Se déconnecter
+                            <button className="text-sm text-center py-2 w-full hover:underline">
+                                <NavLink to="/logout">
+                                    Se déconnecter
+                                </NavLink>
                             </button>
                         </div>
                     </Dropdown>

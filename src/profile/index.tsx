@@ -3,32 +3,42 @@ import './profile.css';
 import { ProfileInterface, UserContext, UserDispatchContext, generateId } from '../user';
 import EditProfile from './EditProfile';
 import EditProfilePicture from './EditProfilePicture';
+import { useNavigate } from 'react-router-dom';
 
 function Profile() {
 
-    const user = useContext(UserContext);
+    // user can not be null/undefined thanks to ProtectedRoute
+    const user = useContext(UserContext)!;
     const dispatch = useContext(UserDispatchContext);
 
-    const profiles = user?.profiles || [];
-    const managing = user?.managingProfiles || false;
+    const navigate = useNavigate();
+
+    const profiles = user.profiles;
+    const managing = user.managingProfiles;
     const [currentProfile, setCurrentProfile] = useState<ProfileInterface | null>(null); // current profile user is editing
     const [editingProfilePicture, setEditingProfilePicture] = useState(false);
     const [newProfile, setNewProfile] = useState<ProfileInterface | null>(null); // current profile user is creating
     const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {   
+        setSelectedProfile(null);
+    }, []);
 
     const toggleManaging = () => {
         if (dispatch != null)
             dispatch({ type: 'TOGGLE_MANAGING' });
     };
 
-    const setSelectedProfile = (profile: ProfileInterface) => {
+    const setSelectedProfile = (profile: ProfileInterface | null) => {
         if (dispatch === null)  
             return;
         
         dispatch({
             type: 'SELECT_PROFILE',
-            payload: profile.id
+            payload: profile != null ? profile.id : null
         });
+        if (profile != null && navigate != null)
+            navigate('/');
     };
 
     const defaultProfile: ProfileInterface = {
