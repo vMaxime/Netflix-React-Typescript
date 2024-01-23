@@ -39,9 +39,9 @@ function Login() {
             if (data.hasOwnProperty('error')) {
                 setLoading(false);
                 if (data.error === 'bad_code')
-                    setError('Une erreur est survenue, réessayez ultérieurement..');
+                    setError('Code invalide.');
                 else
-                    throw new Error('');
+                    throw new Error(response.status.toString());
                 return;
             }
             if (dispatch) {
@@ -54,9 +54,9 @@ function Login() {
                 });
                 setLoading(false);
             }
-        } catch {
+        } catch (status) {
             setLoading(false);
-            setError('An unexpected error ocurred, try again..');
+            setError('[' + status + '] Une erreur est inconnue est survenue, le serveur gatekeeper n\'est peut être pas installé ou mal configuré.');
         }
     }
 
